@@ -22,6 +22,7 @@ extra["vaadinVersion"] = "23.3.1"
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-devtools")
 	implementation("com.vaadin:vaadin-spring-boot-starter")
 	implementation("org.flywaydb:flyway-core")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")

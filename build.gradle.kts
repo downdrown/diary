@@ -31,6 +31,8 @@ dependencies {
 	runtimeOnly("io.micrometer:micrometer-registry-influx")
 	runtimeOnly("org.hsqldb:hsqldb")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
 }
 
 dependencyManagement {

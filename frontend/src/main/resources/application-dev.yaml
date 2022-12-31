@@ -1,0 +1,9 @@
+management:
+  metrics:
+    export:
+      influx:
+        enabled: true
+        uri: http://influxdb.homeserver.home
+        org: downdrown
+        bucket: diary_metrics_dev
+        token: 2q2XyzxPAlOvK_spoI_-IMiGyOTvTSfh4PqYHQSAu7RGZruovX67ISqrZj4z_U5Q2v3Zd09BBY6XEbamGCgu6A==

@@ -2,7 +2,7 @@ node_modules
 HELP.md
 .gradle
 build/
-frontend/generated
+frontend/frontend/generated
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/

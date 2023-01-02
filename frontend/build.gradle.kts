@@ -6,6 +6,9 @@ plugins {
 
 dependencies {
 	implementation("com.vaadin:vaadin-spring-boot-starter")
+
+	implementation(project(":api"))
+	runtimeOnly(project(":backend"))
 }
 
 dependencyManagement {

@@ -31,16 +31,17 @@ subprojects {
 
 	dependencies {
 
-		implementation("org.springframework.boot:spring-boot-starter-actuator")
-		//implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-		implementation("org.springframework.boot:spring-boot-devtools")
-		//implementation("org.flywaydb:flyway-core")
+		// Kotlin
 		implementation("org.jetbrains.kotlin:kotlin-reflect")
 		implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-		//runtimeOnly("com.h2database:h2")
+
+		// Spring
+		implementation("org.springframework.boot:spring-boot-starter-actuator")
+		implementation("org.springframework.boot:spring-boot-devtools")
 		runtimeOnly("io.micrometer:micrometer-registry-influx")
 		testImplementation("org.springframework.boot:spring-boot-starter-test")
 
+		// Util
 		implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
 
 	}

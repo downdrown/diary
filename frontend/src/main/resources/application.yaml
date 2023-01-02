@@ -1,6 +1,8 @@
 spring:
   application:
     name: Diary
+  config:
+    import: backend-module.yaml
 management:
   metrics:
     export:

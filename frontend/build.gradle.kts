@@ -5,6 +5,8 @@ plugins {
 }
 
 dependencies {
+
+	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("com.vaadin:vaadin-spring-boot-starter")
 
 	implementation(project(mapOf("path" to ":api")))

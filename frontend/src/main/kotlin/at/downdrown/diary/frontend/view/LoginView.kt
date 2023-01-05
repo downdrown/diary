@@ -1,5 +1,6 @@
 package at.downdrown.diary.frontend.view
 
+import at.downdrown.diary.frontend.extensions.i18n
 import at.downdrown.diary.frontend.extensions.navigate
 import com.vaadin.flow.component.login.LoginI18n
 import com.vaadin.flow.component.login.LoginOverlay
@@ -50,19 +51,19 @@ class LoginView : VerticalLayout(), BeforeEnterObserver {
     private fun setupLoginI18n(): LoginI18n {
 
         val loginI18nHeader = LoginI18n.Header()
-        loginI18nHeader.title = getTranslation("login.header.title")
-        loginI18nHeader.description = getTranslation("login.header.description")
+        loginI18nHeader.title = i18n("login.header.title")
+        loginI18nHeader.description = i18n("login.header.description")
 
         val loginI18nForm = LoginI18n.Form()
-        loginI18nForm.title = getTranslation("login.form.title")
-        loginI18nForm.username = getTranslation("login.form.username")
-        loginI18nForm.password = getTranslation("login.form.password")
-        loginI18nForm.submit = getTranslation("login.form.submit")
-        loginI18nForm.forgotPassword = getTranslation("login.form.forgotPassword")
+        loginI18nForm.title = i18n("login.form.title")
+        loginI18nForm.username = i18n("login.form.username")
+        loginI18nForm.password = i18n("login.form.password")
+        loginI18nForm.submit = i18n("login.form.submit")
+        loginI18nForm.forgotPassword = i18n("login.form.forgotPassword")
 
         val loginI18nErrorMessage = LoginI18n.ErrorMessage()
-        loginI18nErrorMessage.title = getTranslation("login.error.title")
-        loginI18nErrorMessage.message = getTranslation("login.error.message")
+        loginI18nErrorMessage.title = i18n("login.error.title")
+        loginI18nErrorMessage.message = i18n("login.error.message")
 
         val loginI18n = LoginI18n()
         loginI18n.header = loginI18nHeader

@@ -18,7 +18,7 @@ import com.vaadin.flow.theme.lumo.LumoUtility
 @AnonymousAllowed
 class LoginView : VerticalLayout(), BeforeEnterObserver {
 
-    private var hasLoginError = false
+    private lateinit var onHasLoginErrorChange: (Boolean) -> Unit
 
     init {
         setupLayout()
@@ -34,11 +34,13 @@ class LoginView : VerticalLayout(), BeforeEnterObserver {
     }
 
     private fun loginOverlay(): LoginOverlay {
+
         val loginOverlay = LoginOverlay(setupLoginI18n())
         loginOverlay.isOpened = true
         loginOverlay.action = "login"
         loginOverlay.addClassName(LumoUtility.Padding.NONE)
-        loginOverlay.isError = hasLoginError
+
+        onHasLoginErrorChange = loginOverlay::setError
 
         loginOverlay.addForgotPasswordListener {
             loginOverlay.isOpened = false
@@ -80,7 +82,7 @@ class LoginView : VerticalLayout(), BeforeEnterObserver {
                 .parameters
                 .containsKey("error")
         ) {
-            hasLoginError = true
+            onHasLoginErrorChange.invoke(true)
         }
     }
 }

@@ -1,6 +1,6 @@
 package at.downdrown.diary.frontend.view
 
-import com.vaadin.flow.component.UI
+import at.downdrown.diary.frontend.extensions.navigate
 import com.vaadin.flow.component.login.LoginI18n
 import com.vaadin.flow.component.login.LoginOverlay
 import com.vaadin.flow.component.orderedlayout.FlexComponent
@@ -41,7 +41,7 @@ class LoginView : VerticalLayout(), BeforeEnterObserver {
 
         loginOverlay.addForgotPasswordListener {
             loginOverlay.isOpened = false
-            UI.getCurrent().navigate("register")
+            navigate(View.Registration)
         }
 
         return loginOverlay

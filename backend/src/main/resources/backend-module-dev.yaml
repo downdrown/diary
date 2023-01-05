@@ -1,4 +1,6 @@
 spring:
+  datasource:
+    url: jdbc:h2:~/diary;DB_CLOSE_DELAY=-1;AUTO_SERVER=TRUE
   h2:
     console:
       enabled: true

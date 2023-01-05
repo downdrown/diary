@@ -36,6 +36,5 @@ data class UserRegistrationFormModel (
             LocalDateTime.now(),
             null
         )
-
     }
 }

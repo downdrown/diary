@@ -20,13 +20,14 @@ class UserServiceImpl(
     }
 
     override fun update(user: User) {
-        user.id?.let {
-            val dbUser = userRepository.findById(it).orElseThrow()
+        user.id?.let { userId ->
+            val dbUser = userRepository.findById(userId).orElseThrow()
             dbUser.username = user.username
             dbUser.firstname = user.firstname
             dbUser.lastname = user.lastname
             dbUser.birthdate = user.birthdate
             dbUser.email = user.email
+            dbUser.lastLoginAt = user.lastLoginAt
 
             userRepository.save(dbUser)
         }

@@ -14,4 +14,6 @@ interface UserService {
 
     fun changePassword(username: String, currentPassword: String, newPassword: String)
 
+    fun updateLastLogin(username: String)
+
 }

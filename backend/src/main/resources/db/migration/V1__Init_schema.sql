@@ -1,7 +1,7 @@
 -- Initialize Schema
 create table diary_users
 (
-    id            bigint auto_increment,
+    id identity not null primary key,
     username      varchar(500)  not null unique,
     firstname     varchar(1000) not null,
     lastname      varchar(1000) not null,

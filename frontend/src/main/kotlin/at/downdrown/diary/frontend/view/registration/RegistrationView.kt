@@ -26,6 +26,7 @@ import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.data.binder.*
 import com.vaadin.flow.data.validator.DateRangeValidator
 import com.vaadin.flow.data.validator.EmailValidator
+import com.vaadin.flow.router.HasDynamicTitle
 import com.vaadin.flow.router.Route
 import com.vaadin.flow.server.auth.AnonymousAllowed
 import java.time.LocalDate
@@ -36,7 +37,7 @@ import kotlin.String
 @AnonymousAllowed
 class RegistrationView(
     private val userService: UserService
-) : VerticalLayout() {
+) : VerticalLayout(), HasDynamicTitle {
 
     private val isMobile = UI.getCurrent().isMobile()
 
@@ -209,5 +210,9 @@ class RegistrationView(
                 ValidationResult.error(i18n("registration.form.validation.password.nomatch"))
             }
         }
+    }
+
+    override fun getPageTitle(): String {
+        return i18n("registration.pagetitle")
     }
 }

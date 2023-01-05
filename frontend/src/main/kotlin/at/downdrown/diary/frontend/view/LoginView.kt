@@ -6,17 +6,13 @@ import com.vaadin.flow.component.login.LoginI18n
 import com.vaadin.flow.component.login.LoginOverlay
 import com.vaadin.flow.component.orderedlayout.FlexComponent
 import com.vaadin.flow.component.orderedlayout.VerticalLayout
-import com.vaadin.flow.router.BeforeEnterEvent
-import com.vaadin.flow.router.BeforeEnterObserver
-import com.vaadin.flow.router.PageTitle
-import com.vaadin.flow.router.Route
+import com.vaadin.flow.router.*
 import com.vaadin.flow.server.auth.AnonymousAllowed
 import com.vaadin.flow.theme.lumo.LumoUtility
 
 @Route("login")
-@PageTitle("Login")
 @AnonymousAllowed
-class LoginView : VerticalLayout(), BeforeEnterObserver {
+class LoginView : VerticalLayout(), HasDynamicTitle, BeforeEnterObserver {
 
     private lateinit var onHasLoginErrorChange: (Boolean) -> Unit
 
@@ -76,13 +72,20 @@ class LoginView : VerticalLayout(), BeforeEnterObserver {
     }
 
     override fun beforeEnter(beforeEnterEvent: BeforeEnterEvent) {
-        // inform the user about an authentication error
-        if (beforeEnterEvent.location
+        checkForLoginError(beforeEnterEvent.location)
+    }
+
+    private fun checkForLoginError(location: Location) {
+        if (location
                 .queryParameters
                 .parameters
                 .containsKey("error")
         ) {
             onHasLoginErrorChange.invoke(true)
         }
+    }
+
+    override fun getPageTitle(): String {
+        return i18n("login.pagetitle")
     }
 }

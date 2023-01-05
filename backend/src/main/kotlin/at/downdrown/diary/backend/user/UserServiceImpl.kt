@@ -5,6 +5,7 @@ import at.downdrown.diary.api.user.UserService
 import at.downdrown.diary.backend.persistence.repository.UserRepository
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 @Service
 class UserServiceImpl(
@@ -14,6 +15,7 @@ class UserServiceImpl(
 
     override fun register(user: User, password: String) {
         val encodedPassword = passwordEncoder.encode(password)
+        user.registeredAt = LocalDateTime.now()
         userRepository.save(user.toEntity(encodedPassword))
     }
 

@@ -4,12 +4,12 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 data class User(
-    val id: Long?,
-    val username: String,
-    val firstname: String,
-    val lastname: String,
-    val birthdate: LocalDate?,
-    val email: String,
-    val registeredAt: LocalDateTime,
-    val lastLoginAt: LocalDateTime?
+    var id: Long?,
+    var username: String,
+    var firstname: String,
+    var lastname: String,
+    var birthdate: LocalDate?,
+    var email: String,
+    var registeredAt: LocalDateTime,
+    var lastLoginAt: LocalDateTime?
 )

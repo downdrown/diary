@@ -2,6 +2,7 @@ package at.downdrown.diary.frontend.view.registration
 
 import at.downdrown.diary.api.user.UserService
 import at.downdrown.diary.frontend.extensions.*
+import at.downdrown.diary.frontend.validation.Validators
 import at.downdrown.diary.frontend.view.View
 import com.vaadin.flow.component.*
 import com.vaadin.flow.component.Unit
@@ -24,19 +25,17 @@ import com.vaadin.flow.component.textfield.EmailField
 import com.vaadin.flow.component.textfield.PasswordField
 import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.data.binder.*
-import com.vaadin.flow.data.validator.DateRangeValidator
-import com.vaadin.flow.data.validator.EmailValidator
 import com.vaadin.flow.router.HasDynamicTitle
 import com.vaadin.flow.router.Route
 import com.vaadin.flow.server.auth.AnonymousAllowed
-import java.time.LocalDate
 import kotlin.Exception
 import kotlin.String
 
 @Route("/register")
 @AnonymousAllowed
 class RegistrationView(
-    private val userService: UserService
+    private val userService: UserService,
+    private val validators: Validators
 ) : VerticalLayout(), HasDynamicTitle {
 
     private val isMobile = UI.getCurrent().isMobile()
@@ -97,8 +96,7 @@ class RegistrationView(
 
         binder.forField(username)
             .asRequired()
-            .withValidator(usernameIsValid())
-            .withValidator(usernameDoesNotExist())
+            .withValidator(validators.usernameValidator())
             .bind(UserRegistrationFormModel::username.getter, UserRegistrationFormModel::username.setter)
 
         binder.forField(firstname)
@@ -110,28 +108,22 @@ class RegistrationView(
             .bind(UserRegistrationFormModel::lastname.getter, UserRegistrationFormModel::lastname.setter)
 
         binder.forField(birthdate)
-            .withValidator(
-                DateRangeValidator(
-                    i18n("registration.form.validation.birthdate"),
-                    LocalDate.now().minusYears(100),
-                    LocalDate.now()
-                )
-            )
+            .withValidator(validators.birthdateValidator())
             .bind(UserRegistrationFormModel::birthdate.getter, UserRegistrationFormModel::birthdate.setter)
 
         binder.forField(email)
             .asRequired()
-            .withValidator(EmailValidator(i18n("registration.form.validation.email")))
+            .withValidator(validators.emailValidator())
             .bind(UserRegistrationFormModel::email.getter, UserRegistrationFormModel::email.setter)
 
         binder.forField(password)
             .asRequired()
-            .withValidator(passwordEquals(confirmPassword))
+            .withValidator(validators.passwordEquals(confirmPassword))
             .bind(UserRegistrationFormModel::password.getter, UserRegistrationFormModel::password.setter)
 
         binder.forField(confirmPassword)
             .asRequired()
-            .withValidator(passwordEquals(password))
+            .withValidator(validators.passwordEquals(password))
             .bind(UserRegistrationFormModel::confirmPassword.getter, UserRegistrationFormModel::confirmPassword.setter)
 
         binder.bean = UserRegistrationFormModel()
@@ -171,45 +163,6 @@ class RegistrationView(
             formLayout,
             actionsLayout
         )
-    }
-
-    private fun usernameIsValid(): Validator<String> {
-        return Validator { value, context ->
-            val field = context.component.get() as TextField
-            if (value.contains(" ")) {
-                field.colorTextRed()
-                ValidationResult.error(i18n("registration.form.validation.username.invalid", value))
-            } else {
-                field.colorTextGreen()
-                ValidationResult.ok()
-            }
-        }
-    }
-
-    private fun usernameDoesNotExist(): Validator<String> {
-        return Validator { value, context ->
-            val field = context.component.get() as TextField
-            if (userService.exists(value)) {
-                field.colorTextRed()
-                ValidationResult.error(i18n("registration.form.validation.username.exists", value))
-            } else {
-                field.colorTextGreen()
-                ValidationResult.ok()
-            }
-        }
-    }
-
-    private fun passwordEquals(otherField: PasswordField): Validator<String> {
-        return Validator { value, _ ->
-            if (otherField.value.isEmpty() || (otherField.value != null && value != null && otherField.value.equals(
-                    value
-                ))
-            ) {
-                ValidationResult.ok()
-            } else {
-                ValidationResult.error(i18n("registration.form.validation.password.nomatch"))
-            }
-        }
     }
 
     override fun getPageTitle(): String {

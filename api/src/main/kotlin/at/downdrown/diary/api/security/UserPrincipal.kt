@@ -5,7 +5,7 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 class UserPrincipal(
-    private val user: User,
+    val user: User,
     private val password: String,
 ): UserDetails {
 

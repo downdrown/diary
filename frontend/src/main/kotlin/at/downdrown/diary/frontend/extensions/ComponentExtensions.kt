@@ -1,7 +1,19 @@
 package at.downdrown.diary.frontend.extensions
 
 import com.vaadin.flow.component.Component
+import com.vaadin.flow.component.HasEnabled
+fun HasEnabled.enable() {
+    isEnabled = true
+}
 
-fun Component.i18n(key: String, vararg params: Any): String {
-    return getTranslation(key, *params)
+fun HasEnabled.disable() {
+    isEnabled = false
+}
+
+fun Component.hide() {
+    isVisible = false
+}
+
+fun Component.show() {
+    isVisible = true
 }

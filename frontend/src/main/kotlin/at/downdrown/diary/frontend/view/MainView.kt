@@ -1,5 +1,6 @@
 package at.downdrown.diary.frontend.view
 
+import at.downdrown.diary.frontend.dialog.ProfileDialog
 import at.downdrown.diary.frontend.extensions.i18n
 import at.downdrown.diary.frontend.extensions.userPrincipal
 import com.vaadin.flow.component.UI
@@ -41,7 +42,7 @@ class MainView() : AppLayout(), HasDynamicTitle {
 
         val menuItem: MenuItem = menuBar.addItem(avatar)
         val subMenu: SubMenu = menuItem.subMenu
-        subMenu.addItem(i18n("main.usermenu.profile"))
+        subMenu.addItem(i18n("main.usermenu.profile")) { ProfileDialog().open() }
         subMenu.addItem(i18n("main.usermenu.settings"))
         subMenu.addItem(i18n("main.usermenu.help"))
         subMenu.addItem(i18n("main.usermenu.logout")) { logout() }

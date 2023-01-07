@@ -10,4 +10,13 @@ create table diary_users
     registered_at timestamp     not null default current_timestamp,
     last_login_at timestamp,
     password      varchar(1000) not null
-)
+);
+
+-- Spring Related Tables
+create table persistent_logins
+(
+    username  varchar(64) not null,
+    series    varchar(64) primary key,
+    token     varchar(64) not null,
+    last_used timestamp   not null
+);

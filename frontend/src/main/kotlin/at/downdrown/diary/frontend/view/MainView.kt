@@ -82,8 +82,8 @@ class MainView(
 
     private fun logout() {
         UI.getCurrent().page.setLocation(View.Login.location)
-        SecurityContextLogoutHandler().logout(
-            VaadinServletRequest.getCurrent().httpServletRequest, null, null
-        )
+        val httpServletRequest = VaadinServletRequest.getCurrent().httpServletRequest
+        httpServletRequest.logout()
+        SecurityContextLogoutHandler().logout(httpServletRequest, null, null)
     }
 }

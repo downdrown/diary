@@ -1,10 +1,7 @@
 package at.downdrown.diary.frontend.validation
 
 import at.downdrown.diary.api.user.UserService
-import at.downdrown.diary.frontend.extensions.colorTextGreen
-import at.downdrown.diary.frontend.extensions.colorTextRed
-import at.downdrown.diary.frontend.extensions.i18n
-import at.downdrown.diary.frontend.extensions.userPrincipal
+import at.downdrown.diary.frontend.extensions.*
 import com.vaadin.flow.component.textfield.PasswordField
 import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.data.binder.ValidationResult
@@ -19,15 +16,22 @@ class Validators(
     private val userService: UserService
 ) {
     fun usernameValidator(): Validator<String> {
-        return Validator { value, context ->
-            val loggedInUser = userPrincipal().user
+        return Validator { givenUsername, context ->
+
+           if (givenUsername == null || givenUsername.isBlank()) {
+                ValidationResult.error(i18n("validator.username.empty", givenUsername))
+            }
+
             val field = context.component.get() as TextField
-            if (!value.equals(loggedInUser.username) && userService.exists(value)) {
+            val usernameAlreadyTaken = userService.exists(givenUsername)
+            val isOwnUsername = isAuthenticated() && givenUsername != null && givenUsername.contentEquals(userPrincipal().username)
+
+            if (usernameAlreadyTaken && !isOwnUsername) {
                 field.colorTextRed()
-                ValidationResult.error(i18n("validator.username.alreadyexists", value))
-            } else if (value.contains(" ")) {
+                ValidationResult.error(i18n("validator.username.alreadyexists", givenUsername))
+            } else if (givenUsername.contains(" ")) {
                 field.colorTextRed()
-                ValidationResult.error(i18n("validator.username.illegalformat", value))
+                ValidationResult.error(i18n("validator.username.illegalformat", givenUsername))
             } else {
                 field.colorTextGreen()
                 ValidationResult.ok()

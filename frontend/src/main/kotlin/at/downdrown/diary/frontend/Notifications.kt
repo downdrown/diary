@@ -19,6 +19,10 @@ class Notifications {
             successNotification(i18n("notification.registration.success", registeredUsername)).open()
         }
 
+        fun showChangePasswordSuccess() {
+            successNotification(i18n("notification.changepassword.success")).open()
+        }
+
         private fun successNotification(notification: String, vararg params: Any): Notification {
 
             val notificationComponent = Notification()

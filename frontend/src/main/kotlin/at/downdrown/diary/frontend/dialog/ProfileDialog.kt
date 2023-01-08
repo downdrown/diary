@@ -60,7 +60,7 @@ class ProfileDialog(
 
         footer.add(closeButton, saveButton)
 
-        binder.addValueChangeListener { binder.hasValidChanges().let { saveButton.show() } }
+        binder.addValueChangeListener { if (binder.hasValidChanges()) saveButton.show() else saveButton.hide() }
         binder.readBean(userPrincipal.user)
     }
 

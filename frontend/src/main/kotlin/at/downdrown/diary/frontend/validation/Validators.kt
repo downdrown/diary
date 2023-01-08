@@ -15,13 +15,17 @@ import com.vaadin.flow.data.binder.Validator
 import com.vaadin.flow.data.validator.DateRangeValidator
 import com.vaadin.flow.data.validator.EmailValidator
 import com.vaadin.flow.data.value.ValueChangeMode
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.BadCredentialsException
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 
 @Component
 class Validators(
     private val userService: UserService,
-    private val passwordStrengthValidator: PasswordStrengthValidator
+    private val passwordStrengthValidator: PasswordStrengthValidator,
+    private val authenticationManager: AuthenticationManager
 ) {
     fun usernameValidator(): Validator<String> {
         return Validator { givenUsername, context ->
@@ -57,6 +61,36 @@ class Validators(
                 ValidationResult.ok()
             } else {
                 ValidationResult.error(i18n("validator.password.nomatch"))
+            }
+        }
+    }
+
+    fun passwordMatchesCurrent(): Validator<String> {
+        return Validator { value, _ ->
+            if (value.isNullOrBlank()) {
+                ValidationResult.ok()
+            } else {
+                try {
+                    authenticationManager.authenticate(UsernamePasswordAuthenticationToken(userPrincipal().username, value))
+                    ValidationResult.ok()
+                } catch (badCredentials: BadCredentialsException) {
+                    ValidationResult.error(i18n("validator.password.doesnotmatchcurrent"))
+                }
+            }
+        }
+    }
+
+    fun passwordDoesntMatchCurrent(): Validator<String> {
+        return Validator { value, _ ->
+            if (value.isNullOrBlank()) {
+                ValidationResult.ok()
+            } else {
+                try {
+                    authenticationManager.authenticate(UsernamePasswordAuthenticationToken(userPrincipal().username, value))
+                    ValidationResult.error(i18n("validator.password.matchescurrent"))
+                } catch (badCredentials: BadCredentialsException) {
+                    ValidationResult.ok()
+                }
             }
         }
     }

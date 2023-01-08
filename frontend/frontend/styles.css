@@ -1,0 +1,8 @@
+:root {
+    --lumo-warning-color: #fbc52f;
+    --lumo-warning-text-color: var(--lumo-warning-color);
+}
+
+vaadin-progress-bar.warning::part(value) {
+    background-color: var(--lumo-warning-color);
+}

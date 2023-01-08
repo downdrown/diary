@@ -72,6 +72,8 @@ class RegistrationView(
         val birthdate = DatePicker(i18n("registration.form.birthdate"))
         val email = EmailField(i18n("registration.form.email"))
         val password = PasswordField(i18n("registration.form.password"))
+        validators.addDefaultHelperComponentFor(password)
+
         val confirmPassword = PasswordField(i18n("registration.form.confirmPassword"))
 
         val formLayout = FormLayout(

@@ -1,6 +1,7 @@
 package at.downdrown.diary.frontend.view.registration
 
 import at.downdrown.diary.api.user.UserService
+import at.downdrown.diary.frontend.Notifications
 import at.downdrown.diary.frontend.extensions.*
 import at.downdrown.diary.frontend.validation.Validators
 import at.downdrown.diary.frontend.view.View
@@ -13,7 +14,6 @@ import com.vaadin.flow.component.formlayout.FormLayout
 import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep
 import com.vaadin.flow.component.html.H3
 import com.vaadin.flow.component.icon.VaadinIcon
-import com.vaadin.flow.component.notification.Notification
 import com.vaadin.flow.component.orderedlayout.FlexComponent
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout
 import com.vaadin.flow.component.orderedlayout.VerticalLayout
@@ -134,7 +134,7 @@ class RegistrationView(
             try {
                 val userRegistrationFormModel = binder.bean
                 userService.register(userRegistrationFormModel.toUser(), userRegistrationFormModel.password)
-                Notification.show(i18n("registration.success", userRegistrationFormModel.username), 3000, Notification.Position.BOTTOM_END)
+                Notifications.showRegistrationSuccess(userRegistrationFormModel.username)
                 navigate(View.Login)
             } catch (e: Exception) {
                 if (!event.source.isEnabled) {

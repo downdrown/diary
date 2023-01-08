@@ -12,14 +12,22 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout
 class Notifications {
     companion object {
         fun showSaveSuccess() {
+            successNotification("notification.save.success").open()
+        }
 
-            val notification = Notification()
-            notification.duration = 5_000
-            notification.position = Notification.Position.BOTTOM_END
+        fun showRegistrationSuccess(registeredUsername: String) {
+            successNotification(i18n("notification.registration.success", registeredUsername)).open()
+        }
 
-            val notificationLabel = Label(i18n("notification.save.success"))
+        private fun successNotification(notification: String, vararg params: Any): Notification {
 
-            val dismissButton = Button(i18n("notification.button.dismiss")) { notification.close() }
+            val notificationComponent = Notification()
+            notificationComponent.duration = 5_000
+            notificationComponent.position = Notification.Position.BOTTOM_END
+
+            val notificationLabel = Label(notification)
+
+            val dismissButton = Button(i18n("notification.button.dismiss", params)) { notificationComponent.close() }
             dismissButton.addThemeVariants(ButtonVariant.LUMO_SMALL)
             dismissButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY)
 
@@ -31,8 +39,8 @@ class Notifications {
             layout.expand(notificationLabel)
             layout.alignItems = FlexComponent.Alignment.CENTER
 
-            notification.add(layout)
-            notification.open()
+            notificationComponent.add(layout)
+            return notificationComponent
         }
     }
 }

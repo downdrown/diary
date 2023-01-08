@@ -10,6 +10,7 @@ import com.vaadin.flow.component.applayout.AppLayout
 import com.vaadin.flow.component.avatar.Avatar
 import com.vaadin.flow.component.contextmenu.MenuItem
 import com.vaadin.flow.component.contextmenu.SubMenu
+import com.vaadin.flow.component.dependency.CssImport
 import com.vaadin.flow.component.html.H1
 import com.vaadin.flow.component.menubar.MenuBar
 import com.vaadin.flow.component.menubar.MenuBarVariant
@@ -24,6 +25,7 @@ import javax.annotation.security.PermitAll
 
 @Route("/")
 @PermitAll
+@CssImport("styles.css")
 class MainView(
     private val validators: Validators,
     private val userService: UserService

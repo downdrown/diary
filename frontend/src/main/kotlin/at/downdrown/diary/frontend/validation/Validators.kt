@@ -1,30 +1,39 @@
 package at.downdrown.diary.frontend.validation
 
+import at.downdrown.diary.api.security.password.PasswordStrength
+import at.downdrown.diary.api.security.password.PasswordStrengthValidator
 import at.downdrown.diary.api.user.UserService
 import at.downdrown.diary.frontend.extensions.*
+import com.vaadin.flow.component.html.Span
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout
+import com.vaadin.flow.component.progressbar.ProgressBar
+import com.vaadin.flow.component.progressbar.ProgressBarVariant
 import com.vaadin.flow.component.textfield.PasswordField
 import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.data.binder.ValidationResult
 import com.vaadin.flow.data.binder.Validator
 import com.vaadin.flow.data.validator.DateRangeValidator
 import com.vaadin.flow.data.validator.EmailValidator
+import com.vaadin.flow.data.value.ValueChangeMode
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 
 @Component
 class Validators(
-    private val userService: UserService
+    private val userService: UserService,
+    private val passwordStrengthValidator: PasswordStrengthValidator
 ) {
     fun usernameValidator(): Validator<String> {
         return Validator { givenUsername, context ->
 
-           if (givenUsername == null || givenUsername.isBlank()) {
+            if (givenUsername == null || givenUsername.isBlank()) {
                 ValidationResult.error(i18n("validator.username.empty", givenUsername))
             }
 
             val field = context.component.get() as TextField
             val usernameAlreadyTaken = userService.exists(givenUsername)
-            val isOwnUsername = isAuthenticated() && givenUsername != null && givenUsername.contentEquals(userPrincipal().username)
+            val isOwnUsername =
+                isAuthenticated() && givenUsername != null && givenUsername.contentEquals(userPrincipal().username)
 
             if (usernameAlreadyTaken && !isOwnUsername) {
                 field.colorTextRed()
@@ -48,6 +57,53 @@ class Validators(
                 ValidationResult.ok()
             } else {
                 ValidationResult.error(i18n("validator.password.nomatch"))
+            }
+        }
+    }
+
+    fun addDefaultHelperComponentFor(passwordField: PasswordField) {
+
+        val helperText = Span()
+        val helperComponent = ProgressBar(0.0, 1.0)
+        val helperLayout = HorizontalLayout(helperText, helperComponent)
+        helperLayout.hide()
+        helperLayout.setWidthFull()
+        helperLayout.isSpacing = true
+        helperLayout.expand(helperComponent)
+
+        passwordField.helperComponent = helperLayout
+        passwordField.valueChangeMode = ValueChangeMode.EAGER
+
+        passwordField.addValueChangeListener { event ->
+            if (event.value.isEmpty()) helperLayout.hide() else helperLayout.show()
+
+            helperComponent.removeThemeVariants(
+                ProgressBarVariant.LUMO_SUCCESS,
+                ProgressBarVariant.LUMO_ERROR
+            )
+            helperComponent.removeClassName("warning")
+
+            when (passwordStrengthValidator.validatePassword(event.value)) {
+                PasswordStrength.Strong -> {
+                    helperText.text = i18n("helpercomponent.password.strength.strong")
+                    helperText.colorTextGreen()
+                    helperComponent.value = 1.0
+                    helperComponent.addThemeVariants(ProgressBarVariant.LUMO_SUCCESS)
+                }
+
+                PasswordStrength.Medium -> {
+                    helperText.text = i18n("helpercomponent.password.strength.medium")
+                    helperText.colorTextYellow()
+                    helperComponent.value = .66
+                    helperComponent.addClassName("warning")
+                }
+
+                PasswordStrength.Weak -> {
+                    helperText.text = i18n("helpercomponent.password.strength.weak")
+                    helperText.colorTextRed()
+                    helperComponent.value = .33
+                    helperComponent.addThemeVariants(ProgressBarVariant.LUMO_ERROR)
+                }
             }
         }
     }

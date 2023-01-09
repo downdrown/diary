@@ -9,7 +9,7 @@ import com.vaadin.flow.component.icon.VaadinIcon
 import com.vaadin.flow.dom.ThemeList
 import com.vaadin.flow.theme.lumo.Lumo
 
-class ThemeToggle: Composite<Button>() {
+class ThemeToggle : Composite<Button>() {
 
     private val lightIcon = VaadinIcon.SUN_O
     private val darkIcon = VaadinIcon.MOON_O
@@ -29,6 +29,7 @@ class ThemeToggle: Composite<Button>() {
             themeList().add(Lumo.DARK)
         }
     }
+
     private fun toggleIcon() {
         content.icon = getToggleIconForCurrentTheme()
     }

@@ -15,6 +15,7 @@ class BackendSecurityConfig {
     fun passwordEncoder(): PasswordEncoder {
         return BCryptPasswordEncoder()
     }
+
     @Bean
     fun persistentTokenRepository(dataSource: DataSource): PersistentTokenRepository {
         val persistentTokenRepository = JdbcTokenRepositoryImpl()

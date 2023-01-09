@@ -4,7 +4,7 @@ import at.downdrown.diary.api.user.User
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-data class UserRegistrationFormModel (
+data class UserRegistrationFormModel(
     var id: Long?,
     var username: String,
     var firstname: String,

@@ -23,9 +23,11 @@ fun Component.show() {
 fun Span.colorTextRed() {
     style.set("color", "var(--lumo-error-text-color)")
 }
+
 fun Span.colorTextYellow() {
     style.set("color", "var(--lumo-warning-text-color)")
 }
+
 fun Span.colorTextGreen() {
     style.set("color", "var(--lumo-success-text-color)")
 }

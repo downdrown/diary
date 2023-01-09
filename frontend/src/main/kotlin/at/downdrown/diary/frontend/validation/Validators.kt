@@ -71,7 +71,12 @@ class Validators(
                 ValidationResult.ok()
             } else {
                 try {
-                    authenticationManager.authenticate(UsernamePasswordAuthenticationToken(userPrincipal().username, value))
+                    authenticationManager.authenticate(
+                        UsernamePasswordAuthenticationToken(
+                            userPrincipal().username,
+                            value
+                        )
+                    )
                     ValidationResult.ok()
                 } catch (badCredentials: BadCredentialsException) {
                     ValidationResult.error(i18n("validator.password.doesnotmatchcurrent"))
@@ -86,7 +91,12 @@ class Validators(
                 ValidationResult.ok()
             } else {
                 try {
-                    authenticationManager.authenticate(UsernamePasswordAuthenticationToken(userPrincipal().username, value))
+                    authenticationManager.authenticate(
+                        UsernamePasswordAuthenticationToken(
+                            userPrincipal().username,
+                            value
+                        )
+                    )
                     ValidationResult.error(i18n("validator.password.matchescurrent"))
                 } catch (badCredentials: BadCredentialsException) {
                     ValidationResult.ok()

@@ -7,10 +7,11 @@ import org.springframework.security.core.userdetails.UserDetails
 class UserPrincipal(
     val user: User,
     private val password: String,
-): UserDetails {
+) : UserDetails {
 
     val fullname: String
         get() = "${user.firstname} ${user.lastname}"
+
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return mutableListOf()
     }

@@ -1,10 +1,10 @@
 package at.downdrown.diary.frontend.view
 
+import at.downdrown.diary.api.security.userPrincipal
 import at.downdrown.diary.api.user.UserService
 import at.downdrown.diary.frontend.dialog.ChangePasswordDialog
 import at.downdrown.diary.frontend.dialog.ProfileDialog
 import at.downdrown.diary.frontend.extensions.i18n
-import at.downdrown.diary.frontend.extensions.userPrincipal
 import at.downdrown.diary.frontend.validation.Validators
 import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.applayout.AppLayout

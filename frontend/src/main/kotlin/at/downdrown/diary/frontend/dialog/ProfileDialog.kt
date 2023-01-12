@@ -1,5 +1,6 @@
 package at.downdrown.diary.frontend.dialog
 
+import at.downdrown.diary.api.security.userPrincipal
 import at.downdrown.diary.api.user.User
 import at.downdrown.diary.api.user.UserService
 import at.downdrown.diary.frontend.Notifications

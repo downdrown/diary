@@ -1,6 +1,5 @@
-package at.downdrown.diary.frontend.extensions
+package at.downdrown.diary.api.security
 
-import at.downdrown.diary.api.security.UserPrincipal
 import org.springframework.security.authentication.AnonymousAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 

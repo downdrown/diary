@@ -1,7 +1,9 @@
 package at.downdrown.diary.frontend.validation
 
+import at.downdrown.diary.api.security.isAuthenticated
 import at.downdrown.diary.api.security.password.PasswordStrength
 import at.downdrown.diary.api.security.password.PasswordStrengthValidator
+import at.downdrown.diary.api.security.userPrincipal
 import at.downdrown.diary.api.user.UserService
 import at.downdrown.diary.frontend.extensions.*
 import com.vaadin.flow.component.html.Span

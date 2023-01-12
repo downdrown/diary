@@ -5,8 +5,8 @@ import java.time.LocalDateTime
 
 data class MoodCheckIn (
     var id: Long?,
-    var moodScore: MoodScore,
-    var moodDate: LocalDate,
-    var moodStatement: String?,
+    var score: MoodScore,
+    var checkInDate: LocalDate,
+    var comment: String?,
     var createdAt: LocalDateTime?
 )

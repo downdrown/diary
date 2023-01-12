@@ -7,9 +7,9 @@ fun MoodCheckIn.toEntity(): MoodCheckInEntity {
     return MoodCheckInEntity(
         id = id,
         user = null,
-        moodScore = moodScore,
-        moodDate = moodDate,
-        moodStatement = moodStatement,
+        score = score,
+        checkInDate = checkInDate,
+        comment = comment,
         createdAt = null
     )
 }
@@ -17,9 +17,9 @@ fun MoodCheckIn.toEntity(): MoodCheckInEntity {
 fun MoodCheckInEntity.toDomain(): MoodCheckIn {
     return MoodCheckIn(
         id = id,
-        moodScore = moodScore,
-        moodDate = moodDate,
-        moodStatement = moodStatement,
+        score = score,
+        checkInDate = checkInDate,
+        comment = comment,
         createdAt = createdAt
     )
 }

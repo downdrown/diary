@@ -12,7 +12,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout
 class Notifications {
     companion object {
         fun showSaveSuccess() {
-            successNotification("notification.save.success").open()
+            successNotification(i18n("notification.save.success")).open()
         }
 
         fun showRegistrationSuccess(registeredUsername: String) {

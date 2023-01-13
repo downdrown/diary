@@ -34,6 +34,9 @@ class UserEntity(
     var lastLoginAt: LocalDateTime?,
 
     @Column(nullable = false, length = 1000)
-    var password: String
+    var password: String,
+
+    @OneToMany(mappedBy = "user", cascade = [ CascadeType.REMOVE ], fetch = FetchType.LAZY)
+    var moodCheckIns: List<MoodCheckInEntity>
 
 )

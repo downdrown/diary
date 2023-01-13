@@ -1,7 +1,9 @@
 package at.downdrown.diary.frontend.validation
 
+import at.downdrown.diary.api.security.isAuthenticated
 import at.downdrown.diary.api.security.password.PasswordStrength
 import at.downdrown.diary.api.security.password.PasswordStrengthValidator
+import at.downdrown.diary.api.security.userPrincipal
 import at.downdrown.diary.api.user.UserService
 import at.downdrown.diary.frontend.extensions.*
 import com.vaadin.flow.component.html.Span
@@ -13,6 +15,7 @@ import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.data.binder.ValidationResult
 import com.vaadin.flow.data.binder.Validator
 import com.vaadin.flow.data.validator.DateRangeValidator
+import com.vaadin.flow.data.validator.DateTimeRangeValidator
 import com.vaadin.flow.data.validator.EmailValidator
 import com.vaadin.flow.data.value.ValueChangeMode
 import org.springframework.security.authentication.AuthenticationManager
@@ -20,6 +23,7 @@ import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.stereotype.Component
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Component
 class Validators(
@@ -27,6 +31,16 @@ class Validators(
     private val passwordStrengthValidator: PasswordStrengthValidator,
     private val authenticationManager: AuthenticationManager
 ) {
+
+    companion object {
+        fun dateTimeInPast(maxDate: LocalDateTime) : Validator<LocalDateTime> {
+            return DateTimeRangeValidator(
+                i18n("validator.datetime.past"),
+                LocalDateTime.MIN,
+                maxDate)
+        }
+    }
+
     fun usernameValidator(): Validator<String> {
         return Validator { givenUsername, context ->
 

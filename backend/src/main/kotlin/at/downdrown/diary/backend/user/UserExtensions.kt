@@ -13,7 +13,8 @@ fun User.toEntity(password: String): UserEntity {
         email = email,
         registeredAt = registeredAt,
         lastLoginAt = lastLoginAt,
-        password = password
+        password = password,
+        moodCheckIns = emptyList()
     )
 }
 

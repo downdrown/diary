@@ -1,7 +1,6 @@
 package at.downdrown.diary.backend.persistence.entity
 
 import at.downdrown.diary.api.mood.MoodScore
-import java.time.LocalDate
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -21,8 +20,8 @@ class MoodCheckInEntity(
     @Column(name = "score", nullable = false)
     var score: MoodScore,
 
-    @Column(name = "check_in_date", nullable = false)
-    var checkInDate: LocalDate,
+    @Column(name = "check_in_point", nullable = false)
+    var checkInPoint: LocalDateTime,
 
     @Column(name = "comment", length = 5000)
     var comment: String?,

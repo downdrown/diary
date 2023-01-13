@@ -4,6 +4,7 @@ import at.downdrown.diary.api.mood.MoodCheckIn
 import at.downdrown.diary.api.mood.MoodCheckInService
 import at.downdrown.diary.api.mood.MoodScore
 import at.downdrown.diary.frontend.Notifications
+import at.downdrown.diary.frontend.conversion.Converters
 import at.downdrown.diary.frontend.extensions.hasValidChanges
 import at.downdrown.diary.frontend.extensions.hide
 import at.downdrown.diary.frontend.extensions.i18n
@@ -137,6 +138,7 @@ class MoodCheckInDialog(
             .bind(MoodCheckInFormModel::checkInPoint.getter, MoodCheckInFormModel::checkInPoint.setter)
 
         binder.forField(comment)
+            .withConverter(Converters.emptyStringToNullConverter())
             .bind(MoodCheckInFormModel::comment.getter, MoodCheckInFormModel::comment.setter)
 
         return formLayout

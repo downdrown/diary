@@ -5,7 +5,9 @@ import at.downdrown.diary.api.mood.MoodCheckInService
 import at.downdrown.diary.backend.persistence.currentUserReference
 import at.downdrown.diary.backend.persistence.repository.MoodCheckInRepository
 import org.springframework.stereotype.Service
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import javax.persistence.EntityManager
 
 @Service
@@ -21,5 +23,13 @@ class MoodCheckInCheckInServiceImpl(
         moodEntity.createdAt = LocalDateTime.now()
 
         moodCheckInRepository.save(moodEntity)
+    }
+
+    override fun hasAlreadyCheckedIn(username: String, date: LocalDate): Boolean {
+
+        val start = date.atTime(LocalTime.MIN)
+        val end = date.atTime(LocalTime.MAX)
+
+        return moodCheckInRepository.existsMoodCheckInEntitiesByUserUsernameAndCheckInPointBetween(username, start, end)
     }
 }

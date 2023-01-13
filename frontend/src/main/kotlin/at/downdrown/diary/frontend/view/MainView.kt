@@ -1,8 +1,10 @@
 package at.downdrown.diary.frontend.view
 
+import at.downdrown.diary.api.mood.MoodCheckInService
 import at.downdrown.diary.api.security.userPrincipal
 import at.downdrown.diary.api.user.UserService
 import at.downdrown.diary.frontend.dialog.ChangePasswordDialog
+import at.downdrown.diary.frontend.dialog.MoodCheckInDialog
 import at.downdrown.diary.frontend.dialog.ProfileDialog
 import at.downdrown.diary.frontend.extensions.i18n
 import at.downdrown.diary.frontend.validation.Validators
@@ -17,11 +19,10 @@ import com.vaadin.flow.component.menubar.MenuBar
 import com.vaadin.flow.component.menubar.MenuBarVariant
 import com.vaadin.flow.component.tabs.Tab
 import com.vaadin.flow.component.tabs.Tabs
-import com.vaadin.flow.router.HasDynamicTitle
-import com.vaadin.flow.router.Route
-import com.vaadin.flow.router.RouterLink
+import com.vaadin.flow.router.*
 import com.vaadin.flow.server.VaadinServletRequest
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler
+import java.time.LocalDate
 import javax.annotation.security.PermitAll
 
 @Route("/")
@@ -29,8 +30,9 @@ import javax.annotation.security.PermitAll
 @CssImport("styles.css")
 class MainView(
     private val validators: Validators,
-    private val userService: UserService
-) : AppLayout(), HasDynamicTitle {
+    private val userService: UserService,
+    private val moodCheckInService: MoodCheckInService
+) : AppLayout(), HasDynamicTitle, BeforeEnterObserver {
 
     private val principal = userPrincipal()
 
@@ -89,5 +91,15 @@ class MainView(
         val httpServletRequest = VaadinServletRequest.getCurrent().httpServletRequest
         httpServletRequest.logout()
         SecurityContextLogoutHandler().logout(httpServletRequest, null, null)
+    }
+
+    override fun beforeEnter(event: BeforeEnterEvent?) {
+        showMoodCheckInAtLeastOnceADay()
+    }
+
+    private fun showMoodCheckInAtLeastOnceADay() {
+        if (!moodCheckInService.hasAlreadyCheckedIn(userPrincipal().username, LocalDate.now())) {
+            MoodCheckInDialog(false, moodCheckInService).open()
+        }
     }
 }

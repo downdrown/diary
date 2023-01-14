@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-@Table(name = "diary_mood_check_in")
+@Table(schema = "diary", name = "mood_check_in")
 class MoodCheckInEntity(
 
     @Id

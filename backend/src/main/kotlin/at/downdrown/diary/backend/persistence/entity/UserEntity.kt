@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
-@Table(name = "diary_users")
+@Table(schema = "diary", name = "users")
 class UserEntity(
 
     @Id

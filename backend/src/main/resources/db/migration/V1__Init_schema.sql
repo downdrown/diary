@@ -1,5 +1,5 @@
 -- Initialize Schema
-create table diary_users
+create table users
 (
     id identity primary key not null,
     username      varchar(500) unique not null,
@@ -12,7 +12,7 @@ create table diary_users
     password      varchar(1000)       not null
 );
 
-create table diary_mood_check_in
+create table mood_check_in
 (
     id identity primary key not null,
     fk_user_id     int       not null,
@@ -20,10 +20,10 @@ create table diary_mood_check_in
     check_in_point timestamp not null,
     comment        varchar(5000),
     created_at     timestamp not null default current_timestamp,
-    constraint fk_mood_check_in_user foreign key (fk_user_id) references diary_users (id) on delete cascade,
+    constraint fk_mood_check_in_user foreign key (fk_user_id) references users (id) on delete cascade,
     constraint chk_mood_check_in_score check (score in (1, 2, 3, 4, 5))
 );
-create index mood_check_in_score on diary_mood_check_in (score);
+create index mood_check_in_score on mood_check_in (score);
 
 -- Spring Related Tables
 create table persistent_logins

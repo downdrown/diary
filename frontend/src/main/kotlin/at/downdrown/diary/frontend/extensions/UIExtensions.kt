@@ -14,5 +14,5 @@ fun i18n(key: String, vararg params: Any): String {
 }
 
 fun navigate(view: View) {
-    UI.getCurrent().navigate(view.location)
+    UI.getCurrent().navigate(view.navigationTarget)
 }

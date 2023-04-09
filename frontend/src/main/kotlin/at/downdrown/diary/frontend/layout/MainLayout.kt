@@ -17,6 +17,7 @@ import com.vaadin.flow.component.avatar.Avatar
 import com.vaadin.flow.component.button.ButtonVariant
 import com.vaadin.flow.component.contextmenu.MenuItem
 import com.vaadin.flow.component.contextmenu.SubMenu
+import com.vaadin.flow.component.dependency.CssImport
 import com.vaadin.flow.component.dependency.JsModule
 import com.vaadin.flow.component.icon.VaadinIcon
 import com.vaadin.flow.component.menubar.MenuBar
@@ -35,6 +36,7 @@ import elemental.json.impl.JreJsonString
 import java.util.*
 
 @JsModule("./js/os-theme-module.js")
+@CssImport("./css/mainlayout.css")
 @PreserveOnRefresh
 class MainLayout(
     private val validators: Validators,

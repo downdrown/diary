@@ -2,7 +2,7 @@ package at.downdrown.diary.backend.persistence.entity
 
 import java.time.LocalDate
 import java.time.LocalDateTime
-import javax.persistence.*
+import jakarta.persistence.*
 
 @Entity
 @Table(schema = "diary", name = "users")

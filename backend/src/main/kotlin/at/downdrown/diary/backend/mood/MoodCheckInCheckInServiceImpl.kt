@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
-import javax.persistence.EntityManager
+import jakarta.persistence.EntityManager
 
 @Service
 class MoodCheckInCheckInServiceImpl(

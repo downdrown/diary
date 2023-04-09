@@ -3,6 +3,7 @@ package at.downdrown.diary.frontend.view.registration
 import at.downdrown.diary.api.user.UserService
 import at.downdrown.diary.frontend.Notifications
 import at.downdrown.diary.frontend.extensions.*
+import at.downdrown.diary.frontend.service.AuthenticationService
 import at.downdrown.diary.frontend.validation.Validators
 import at.downdrown.diary.frontend.view.View
 import com.vaadin.flow.component.*
@@ -25,6 +26,8 @@ import com.vaadin.flow.component.textfield.EmailField
 import com.vaadin.flow.component.textfield.PasswordField
 import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.data.binder.*
+import com.vaadin.flow.router.BeforeEnterEvent
+import com.vaadin.flow.router.BeforeEnterObserver
 import com.vaadin.flow.router.HasDynamicTitle
 import com.vaadin.flow.router.Route
 import com.vaadin.flow.server.auth.AnonymousAllowed
@@ -34,9 +37,10 @@ import kotlin.String
 @Route("/register")
 @AnonymousAllowed
 class RegistrationView(
+    private val authenticationService: AuthenticationService,
     private val userService: UserService,
     private val validators: Validators
-) : VerticalLayout(), HasDynamicTitle {
+) : VerticalLayout(), HasDynamicTitle, BeforeEnterObserver {
 
     private val isMobile = UI.getCurrent().isMobile()
 
@@ -169,5 +173,11 @@ class RegistrationView(
 
     override fun getPageTitle(): String {
         return i18n("registration.pagetitle")
+    }
+
+    override fun beforeEnter(event: BeforeEnterEvent) {
+        if (authenticationService.isAuthenticated()) {
+            event.forwardTo(View.Today.navigationTarget)
+        }
     }
 }

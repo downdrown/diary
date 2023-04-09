@@ -4,11 +4,13 @@ import at.downdrown.diary.api.security.userPrincipal
 import at.downdrown.diary.api.user.UserService
 import at.downdrown.diary.frontend.dialog.ChangePasswordDialog
 import at.downdrown.diary.frontend.dialog.ProfileDialog
+import at.downdrown.diary.frontend.event.DateSelectedEvent
 import at.downdrown.diary.frontend.extensions.i18n
 import at.downdrown.diary.frontend.service.AuthenticationService
 import at.downdrown.diary.frontend.validation.Validators
 import at.downdrown.diary.frontend.view.View
 import com.vaadin.flow.component.Component
+import com.vaadin.flow.component.ComponentUtil
 import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.Unit
 import com.vaadin.flow.component.applayout.AppLayout
@@ -23,6 +25,7 @@ import com.vaadin.flow.component.icon.VaadinIcon
 import com.vaadin.flow.component.menubar.MenuBar
 import com.vaadin.flow.component.menubar.MenuBarVariant
 import com.vaadin.flow.component.orderedlayout.FlexComponent
+import com.vaadin.flow.component.orderedlayout.FlexLayout
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout
 import com.vaadin.flow.component.tabs.Tab
 import com.vaadin.flow.component.tabs.Tabs
@@ -33,6 +36,8 @@ import com.vaadin.flow.router.PreserveOnRefresh
 import com.vaadin.flow.router.RouterLink
 import com.vaadin.flow.theme.lumo.Lumo
 import elemental.json.impl.JreJsonString
+import org.vaadin.addons.minicalendar.MiniCalendar
+import java.time.LocalDate
 import java.util.*
 
 @JsModule("./js/os-theme-module.js")
@@ -47,6 +52,7 @@ class MainLayout(
     init {
         initEnvironment()
         addToNavbar(navigation())
+        addToDrawer(drawer())
     }
 
     private fun initEnvironment() {
@@ -134,5 +140,29 @@ class MainLayout(
         subMenu.addItem(i18n("main.usermenu.logout")) { authenticationService.logout() }
 
         return menuBar
+    }
+
+
+
+    private fun drawer(): Component {
+        val layout = FlexLayout(
+            miniCalendar()
+        )
+        layout.style.set("margin-top", "10px")
+        layout.setWidthFull()
+        layout.justifyContentMode = FlexComponent.JustifyContentMode.CENTER
+        return layout
+    }
+
+    private fun miniCalendar(): Component {
+        val miniCalendar = MiniCalendar()
+        miniCalendar.value = LocalDate.now()
+        miniCalendar.addValueChangeListener { event ->
+            ComponentUtil.fireEvent(
+                UI.getCurrent(),
+                DateSelectedEvent(event.value)
+            )
+        }
+        return miniCalendar
     }
 }

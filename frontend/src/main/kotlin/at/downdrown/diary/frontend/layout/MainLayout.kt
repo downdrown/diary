@@ -4,13 +4,11 @@ import at.downdrown.diary.api.security.userPrincipal
 import at.downdrown.diary.api.user.UserService
 import at.downdrown.diary.frontend.dialog.ChangePasswordDialog
 import at.downdrown.diary.frontend.dialog.ProfileDialog
-import at.downdrown.diary.frontend.event.DateSelectedEvent
 import at.downdrown.diary.frontend.extensions.i18n
 import at.downdrown.diary.frontend.service.AuthenticationService
 import at.downdrown.diary.frontend.validation.Validators
 import at.downdrown.diary.frontend.view.View
 import com.vaadin.flow.component.Component
-import com.vaadin.flow.component.ComponentUtil
 import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.Unit
 import com.vaadin.flow.component.applayout.AppLayout
@@ -21,6 +19,7 @@ import com.vaadin.flow.component.contextmenu.MenuItem
 import com.vaadin.flow.component.contextmenu.SubMenu
 import com.vaadin.flow.component.dependency.CssImport
 import com.vaadin.flow.component.dependency.JsModule
+import com.vaadin.flow.component.html.Label
 import com.vaadin.flow.component.icon.VaadinIcon
 import com.vaadin.flow.component.menubar.MenuBar
 import com.vaadin.flow.component.menubar.MenuBarVariant
@@ -36,8 +35,6 @@ import com.vaadin.flow.router.PreserveOnRefresh
 import com.vaadin.flow.router.RouterLink
 import com.vaadin.flow.theme.lumo.Lumo
 import elemental.json.impl.JreJsonString
-import org.vaadin.addons.minicalendar.MiniCalendar
-import java.time.LocalDate
 import java.util.*
 
 @JsModule("./js/os-theme-module.js")
@@ -99,12 +96,12 @@ class MainLayout(
         tabs.addThemeVariants(TabsVariant.LUMO_MINIMAL)
         tabs.isAutoselect = false
         tabs.style["margin"] = "auto"
-        tabs.add(navigationItems(tabs))
+        tabs.add(*navigationItems(tabs))
         return tabs
     }
 
-    private fun navigationItems(tabs: Tabs): List<Component> {
-        return listOf(
+    private fun navigationItems(tabs: Tabs): Array<Tab> {
+        return arrayOf(
             navigationTab(tabs, View.Today),
             navigationTab(tabs, View.Registration)
         )
@@ -155,14 +152,14 @@ class MainLayout(
     }
 
     private fun miniCalendar(): Component {
-        val miniCalendar = MiniCalendar()
-        miniCalendar.value = LocalDate.now()
-        miniCalendar.addValueChangeListener { event ->
-            ComponentUtil.fireEvent(
-                UI.getCurrent(),
-                DateSelectedEvent(event.value)
-            )
-        }
-        return miniCalendar
+//        val miniCalendar = MiniCalendar()
+//        miniCalendar.value = LocalDate.now()
+//        miniCalendar.addValueChangeListener { event ->
+//            ComponentUtil.fireEvent(
+//                UI.getCurrent(),
+//                DateSelectedEvent(event.value)
+//            )
+//        }
+        return Label("MiniCalendar goes here")
     }
 }

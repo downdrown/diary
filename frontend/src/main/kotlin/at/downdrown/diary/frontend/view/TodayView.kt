@@ -14,7 +14,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.router.*
 import mu.KotlinLogging
 import java.time.LocalDate
-import javax.annotation.security.PermitAll
+import jakarta.annotation.security.PermitAll
 
 private val log = KotlinLogging.logger {}
 

@@ -2,7 +2,7 @@ package at.downdrown.diary.backend.persistence.entity
 
 import at.downdrown.diary.api.mood.MoodScore
 import java.time.LocalDateTime
-import javax.persistence.*
+import jakarta.persistence.*
 
 @Entity
 @Table(schema = "diary", name = "mood_check_in")

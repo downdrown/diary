@@ -1,8 +1,8 @@
 package at.downdrown.diary.backend.persistence.entity
 
 import at.downdrown.diary.api.mood.MoodScore
-import javax.persistence.AttributeConverter
-import javax.persistence.Converter
+import jakarta.persistence.AttributeConverter
+import jakarta.persistence.Converter
 
 @Converter(autoApply = true)
 class MoodScoreConverter : AttributeConverter<MoodScore, Int> {

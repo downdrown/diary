@@ -2,11 +2,11 @@ spring:
   config:
     import: backend-module-dev.yaml
 management:
-  metrics:
-    export:
-      influx:
+  influx:
+    metrics:
+      export:
         enabled: true
-        uri: http://influxdb.homeserver.home
+        uri: http://influxdb.bigboy.home
         org: downdrown
         bucket: diary_metrics_dev
         token: 2q2XyzxPAlOvK_spoI_-IMiGyOTvTSfh4PqYHQSAu7RGZruovX67ISqrZj4z_U5Q2v3Zd09BBY6XEbamGCgu6A==

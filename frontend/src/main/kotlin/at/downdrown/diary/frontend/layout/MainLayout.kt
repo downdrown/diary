@@ -21,7 +21,6 @@ import com.vaadin.flow.component.contextmenu.MenuItem
 import com.vaadin.flow.component.contextmenu.SubMenu
 import com.vaadin.flow.component.dependency.CssImport
 import com.vaadin.flow.component.dependency.JsModule
-import com.vaadin.flow.component.html.Label
 import com.vaadin.flow.component.icon.VaadinIcon
 import com.vaadin.flow.component.menubar.MenuBar
 import com.vaadin.flow.component.menubar.MenuBarVariant
@@ -37,9 +36,9 @@ import com.vaadin.flow.router.PreserveOnRefresh
 import com.vaadin.flow.router.RouterLink
 import com.vaadin.flow.theme.lumo.Lumo
 import elemental.json.impl.JreJsonString
-import java.util.*
 import org.vaadin.addons.minicalendar.MiniCalendar
 import java.time.LocalDate
+import java.util.*
 
 @JsModule("./js/os-theme-module.js")
 @CssImport("./css/mainlayout.css")

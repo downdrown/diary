@@ -4,11 +4,13 @@ import at.downdrown.diary.api.security.userPrincipal
 import at.downdrown.diary.api.user.UserService
 import at.downdrown.diary.frontend.dialog.ChangePasswordDialog
 import at.downdrown.diary.frontend.dialog.ProfileDialog
+import at.downdrown.diary.frontend.event.DateSelectedEvent
 import at.downdrown.diary.frontend.extensions.i18n
 import at.downdrown.diary.frontend.service.AuthenticationService
 import at.downdrown.diary.frontend.validation.Validators
 import at.downdrown.diary.frontend.view.View
 import com.vaadin.flow.component.Component
+import com.vaadin.flow.component.ComponentUtil
 import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.Unit
 import com.vaadin.flow.component.applayout.AppLayout
@@ -36,6 +38,8 @@ import com.vaadin.flow.router.RouterLink
 import com.vaadin.flow.theme.lumo.Lumo
 import elemental.json.impl.JreJsonString
 import java.util.*
+import org.vaadin.addons.minicalendar.MiniCalendar
+import java.time.LocalDate
 
 @JsModule("./js/os-theme-module.js")
 @CssImport("./css/mainlayout.css")
@@ -152,14 +156,14 @@ class MainLayout(
     }
 
     private fun miniCalendar(): Component {
-//        val miniCalendar = MiniCalendar()
-//        miniCalendar.value = LocalDate.now()
-//        miniCalendar.addValueChangeListener { event ->
-//            ComponentUtil.fireEvent(
-//                UI.getCurrent(),
-//                DateSelectedEvent(event.value)
-//            )
-//        }
-        return Label("MiniCalendar goes here")
+        val miniCalendar = MiniCalendar()
+        miniCalendar.value = LocalDate.now()
+        miniCalendar.addValueChangeListener { event ->
+            ComponentUtil.fireEvent(
+                UI.getCurrent(),
+                DateSelectedEvent(event.value)
+            )
+        }
+        return miniCalendar
     }
 }

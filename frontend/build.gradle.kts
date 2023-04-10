@@ -14,10 +14,7 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("com.vaadin:vaadin-spring-boot-starter")
-    implementation("org.vaadin.addons.minicalendar:addon:1.3.0") {
-        // TODO: Remove exclusion once the dependency is removed from the lib
-        exclude(group = "org.slf4j", module = "slf4j-simple")
-    }
+    implementation("org.vaadin.addons.minicalendar:addon:1.4.0")
 
     implementation(project(mapOf("path" to ":api")))
     runtimeOnly(project(mapOf("path" to ":backend")))

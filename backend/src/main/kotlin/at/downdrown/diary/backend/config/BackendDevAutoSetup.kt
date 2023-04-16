@@ -39,7 +39,8 @@ class BackendDevAutoSetup(
         log.info { "Creating dev users ..." }
         if (!userService.exists(defaultUser.username)) {
             userService.register(defaultUser,defaultPassword)
+            log.info { "Success! Dev users created." }
         }
-        log.info { "Success! Dev users created." }
+        log.info { "Users already created." }
     }
 }

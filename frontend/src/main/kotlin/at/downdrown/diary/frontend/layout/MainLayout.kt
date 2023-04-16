@@ -180,7 +180,7 @@ class MainLayout(
         if (isMobile()) {
             items.addAll(navigationLinks())
         }
-        return items;
+        return items
     }
 
     private fun navigationLinks(): List<Component> {

@@ -2,11 +2,13 @@ package at.downdrown.diary.frontend.view
 
 import at.downdrown.diary.api.mood.MoodCheckInService
 import at.downdrown.diary.api.security.userPrincipal
+import at.downdrown.diary.frontend.Notifications
 import at.downdrown.diary.frontend.dialog.MoodCheckInDialog
 import at.downdrown.diary.frontend.event.DateSelectedEvent
 import at.downdrown.diary.frontend.event.YearMonthSelectedEvent
 import at.downdrown.diary.frontend.event.onEvent
 import at.downdrown.diary.frontend.extensions.i18n
+import at.downdrown.diary.frontend.extensions.isDesktop
 import at.downdrown.diary.frontend.layout.MainLayout
 import com.vaadin.flow.component.dependency.CssImport
 import com.vaadin.flow.component.html.H1
@@ -44,6 +46,7 @@ class TodayView(
 
     private fun handleDateSelection(selectedDate: LocalDate) {
         log.trace { "The user selected a new date: ${selectedDate.format(DateTimeFormatter.ISO_DATE)}" }
+        if (isDesktop()) Notifications.showDateSelectionSuccess(selectedDate)
     }
 
     private fun handleYearMonthSelection(selectedYearMonth: YearMonth) {

@@ -40,6 +40,7 @@ import com.vaadin.flow.router.RouterLink
 import com.vaadin.flow.theme.lumo.Lumo
 import elemental.json.impl.JreJsonString
 import org.vaadin.addons.minicalendar.MiniCalendar
+import org.vaadin.addons.minicalendar.MiniCalendarVariant
 import java.time.LocalDate
 import java.util.*
 
@@ -201,6 +202,8 @@ class MainLayout(
     private fun miniCalendar(): Component {
         val miniCalendar = MiniCalendar()
         miniCalendar.value = LocalDate.now()
+        miniCalendar.addThemeVariants(MiniCalendarVariant.HIGHLIGHT_CURRENT_DAY)
+        miniCalendar.addThemeVariants(MiniCalendarVariant.HIGHLIGHT_WEEKEND)
         miniCalendar.addValueChangeListener { event ->
             publishEvent(
                 DateSelectedEvent(event.value)

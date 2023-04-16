@@ -9,6 +9,10 @@ fun isMobile(): Boolean {
     return webBrowser.isAndroid || webBrowser.isIPhone || webBrowser.isWindowsPhone
 }
 
+fun isDesktop(): Boolean {
+    return !isMobile()
+}
+
 fun i18n(key: String, vararg params: Any): String {
     return UI.getCurrent().getTranslation(key, *params)
 }

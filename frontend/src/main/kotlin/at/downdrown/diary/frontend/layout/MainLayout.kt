@@ -132,13 +132,13 @@ class MainLayout(
     private fun routerLink(view: View): RouterLink {
         val link = RouterLink(view.navigationTarget)
         link.highlightCondition = HighlightConditions.sameLocation()
-        link.add(i18n(view.i18nKey))
+        link.add(view.i18nKey.i18n())
         link.tabIndex = -1
         return link
     }
 
     private fun appLabel(): Component {
-        val title = H1(i18n("app.name"))
+        val title = H1("app.name".i18n())
         title.setWidthFull()
         title.style
             .set("font-size", "var(--lumo-font-size-l)")
@@ -155,11 +155,11 @@ class MainLayout(
 
         val menuItem: MenuItem = menuBar.addItem(avatar)
         val subMenu: SubMenu = menuItem.subMenu
-        subMenu.addItem(i18n("main.usermenu.profile")) { ProfileDialog(validators, userService).open() }
-        subMenu.addItem(i18n("main.usermenu.changepassword")) { ChangePasswordDialog(validators, userService).open() }
-        subMenu.addItem(i18n("main.usermenu.settings"))
-        subMenu.addItem(i18n("main.usermenu.help"))
-        subMenu.addItem(i18n("main.usermenu.logout")) { authenticationService.logout() }
+        subMenu.addItem("main.usermenu.profile".i18n()) { ProfileDialog(validators, userService).open() }
+        subMenu.addItem("main.usermenu.changepassword".i18n()) { ChangePasswordDialog(validators, userService).open() }
+        subMenu.addItem("main.usermenu.settings".i18n())
+        subMenu.addItem("main.usermenu.help".i18n())
+        subMenu.addItem("main.usermenu.logout".i18n()) { authenticationService.logout() }
 
         return menuBar
     }

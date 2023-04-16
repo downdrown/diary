@@ -31,12 +31,12 @@ class ChangePasswordDialog(
 
         add(form())
 
-        val saveButton = Button(i18n("changepassword.submit")) { handleSave() }
+        val saveButton = Button("changepassword.submit".i18n()) { handleSave() }
         saveButton.addThemeVariants(ButtonVariant.LUMO_SMALL)
         saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY)
         saveButton.hide()
 
-        val closeButton = Button(i18n("changepassword.cancel")) { handleClose() }
+        val closeButton = Button("changepassword.cancel".i18n()) { handleClose() }
         closeButton.addThemeVariants(ButtonVariant.LUMO_SMALL)
 
         footer.add(closeButton, saveButton)
@@ -47,10 +47,10 @@ class ChangePasswordDialog(
 
     private fun form(): FormLayout {
 
-        val currentPassword = PasswordField(i18n("changepassword.form.currentpassword"))
-        val newPassword = PasswordField(i18n("changepassword.form.newpassword"))
+        val currentPassword = PasswordField("changepassword.form.currentpassword".i18n())
+        val newPassword = PasswordField("changepassword.form.newpassword".i18n())
         validators.addDefaultHelperComponentFor(newPassword)
-        val confirmNewPassword = PasswordField(i18n("changepassword.form.confirmnewpassword"))
+        val confirmNewPassword = PasswordField("changepassword.form.confirmnewpassword".i18n())
 
         binder.forField(currentPassword)
             .withValidator(validators.passwordMatchesCurrent())
@@ -94,13 +94,13 @@ class ChangePasswordDialog(
 
             val confirmDialog = ConfirmDialog()
             confirmDialog.isCloseOnEsc = false
-            confirmDialog.setHeader(i18n("changepassword.cancel.unsaved.header"))
-            confirmDialog.setText(i18n("changepassword.cancel.unsaved.text"))
-            confirmDialog.setConfirmText(i18n("changepassword.submit"))
+            confirmDialog.setHeader("changepassword.cancel.unsaved.header".i18n())
+            confirmDialog.setText("changepassword.cancel.unsaved.text".i18n())
+            confirmDialog.setConfirmText("changepassword.submit".i18n())
             confirmDialog.setCancelable(true)
-            confirmDialog.setCancelText(i18n("changepassword.cancel"))
+            confirmDialog.setCancelText("changepassword.cancel".i18n())
             confirmDialog.setRejectable(true)
-            confirmDialog.setRejectText(i18n("changepassword.cancel.unsaved.discard"))
+            confirmDialog.setRejectText("changepassword.cancel.unsaved.discard".i18n())
             confirmDialog.addCancelListener { confirmDialog.close() }
             confirmDialog.addRejectListener { confirmDialog.close(); close() }
             confirmDialog.addConfirmListener { handleSave() }

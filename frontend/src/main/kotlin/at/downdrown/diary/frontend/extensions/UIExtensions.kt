@@ -13,10 +13,6 @@ fun isDesktop(): Boolean {
     return !isMobile()
 }
 
-fun i18n(key: String, vararg params: Any): String {
-    return UI.getCurrent().getTranslation(key, *params)
-}
-
 fun navigate(view: View) {
     UI.getCurrent().navigate(view.navigationTarget)
 }

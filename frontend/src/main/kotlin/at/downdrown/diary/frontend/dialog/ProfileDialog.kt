@@ -51,12 +51,12 @@ class ProfileDialog(
 
         add(layout)
 
-        val saveButton = Button(i18n("profile.submit")) { handleSave() }
+        val saveButton = Button("profile.submit".i18n()) { handleSave() }
         saveButton.addThemeVariants(ButtonVariant.LUMO_SMALL)
         saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY)
         saveButton.hide()
 
-        val closeButton = Button(i18n("profile.cancel")) { handleClose() }
+        val closeButton = Button("profile.cancel".i18n()) { handleClose() }
         closeButton.addThemeVariants(ButtonVariant.LUMO_SMALL)
 
         footer.add(closeButton, saveButton)
@@ -67,13 +67,13 @@ class ProfileDialog(
 
     private fun form(): FormLayout {
 
-        val username = TextField(i18n("profile.form.username"), i18n("profile.form.username.placeholder"))
+        val username = TextField("profile.form.username".i18n(), "profile.form.username.placeholder".i18n())
         username.prefixComponent = VaadinIcon.AT.create()
 
-        val firstname = TextField(i18n("profile.form.firstname"))
-        val lastname = TextField(i18n("profile.form.lastname"))
-        val birthdate = DatePicker(i18n("profile.form.birthdate"))
-        val email = EmailField(i18n("profile.form.email"))
+        val firstname = TextField("profile.form.firstname".i18n())
+        val lastname = TextField("profile.form.lastname".i18n())
+        val birthdate = DatePicker("profile.form.birthdate".i18n())
+        val email = EmailField("profile.form.email".i18n())
 
         val formLayout = FormLayout(
             username,
@@ -120,13 +120,13 @@ class ProfileDialog(
 
             val confirmDialog = ConfirmDialog()
             confirmDialog.isCloseOnEsc = false
-            confirmDialog.setHeader(i18n("profile.cancel.unsaved.header"))
-            confirmDialog.setText(i18n("profile.cancel.unsaved.text"))
-            confirmDialog.setConfirmText(i18n("profile.submit"))
+            confirmDialog.setHeader("profile.cancel.unsaved.header".i18n())
+            confirmDialog.setText("profile.cancel.unsaved.text".i18n())
+            confirmDialog.setConfirmText("profile.submit".i18n())
             confirmDialog.setCancelable(true)
-            confirmDialog.setCancelText(i18n("profile.cancel"))
+            confirmDialog.setCancelText("profile.cancel".i18n())
             confirmDialog.setRejectable(true)
-            confirmDialog.setRejectText(i18n("profile.cancel.unsaved.discard"))
+            confirmDialog.setRejectText("profile.cancel.unsaved.discard".i18n())
             confirmDialog.addCancelListener { confirmDialog.close() }
             confirmDialog.addRejectListener { confirmDialog.close(); close() }
             confirmDialog.addConfirmListener { handleSave() }

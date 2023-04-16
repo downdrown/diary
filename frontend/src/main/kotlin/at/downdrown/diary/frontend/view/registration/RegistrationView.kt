@@ -42,8 +42,6 @@ class RegistrationView(
     private val validators: Validators
 ) : VerticalLayout(), HasDynamicTitle, BeforeEnterObserver {
 
-    private val isMobile = UI.getCurrent().isMobile()
-
     init {
 
         alignItems = FlexComponent.Alignment.CENTER
@@ -51,7 +49,7 @@ class RegistrationView(
         isSpacing = true
 
         val tabSheet = TabSheet()
-        tabSheet.setWidth(if (isMobile) 100f else 50f, Unit.PERCENTAGE)
+        tabSheet.setWidth(if (isMobile()) 100f else 50f, Unit.PERCENTAGE)
         tabSheet.setMaxWidth(700f, Unit.PIXELS)
         tabSheet.addThemeVariants(TabSheetVariant.LUMO_BORDERED)
         tabSheet.add(Tab(i18n("registration.tab.register")), registerSubView())

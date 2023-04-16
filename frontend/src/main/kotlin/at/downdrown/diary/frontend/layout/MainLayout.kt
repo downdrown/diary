@@ -5,12 +5,14 @@ import at.downdrown.diary.api.user.UserService
 import at.downdrown.diary.frontend.dialog.ChangePasswordDialog
 import at.downdrown.diary.frontend.dialog.ProfileDialog
 import at.downdrown.diary.frontend.event.DateSelectedEvent
+import at.downdrown.diary.frontend.event.YearMonthSelectedEvent
+import at.downdrown.diary.frontend.event.publishEvent
 import at.downdrown.diary.frontend.extensions.i18n
+import at.downdrown.diary.frontend.extensions.isMobile
 import at.downdrown.diary.frontend.service.AuthenticationService
 import at.downdrown.diary.frontend.validation.Validators
 import at.downdrown.diary.frontend.view.View
 import com.vaadin.flow.component.Component
-import com.vaadin.flow.component.ComponentUtil
 import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.Unit
 import com.vaadin.flow.component.applayout.AppLayout
@@ -21,12 +23,13 @@ import com.vaadin.flow.component.contextmenu.MenuItem
 import com.vaadin.flow.component.contextmenu.SubMenu
 import com.vaadin.flow.component.dependency.CssImport
 import com.vaadin.flow.component.dependency.JsModule
+import com.vaadin.flow.component.html.H1
 import com.vaadin.flow.component.icon.VaadinIcon
 import com.vaadin.flow.component.menubar.MenuBar
 import com.vaadin.flow.component.menubar.MenuBarVariant
 import com.vaadin.flow.component.orderedlayout.FlexComponent
-import com.vaadin.flow.component.orderedlayout.FlexLayout
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout
+import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.component.tabs.Tab
 import com.vaadin.flow.component.tabs.Tabs
 import com.vaadin.flow.component.tabs.TabsVariant
@@ -51,7 +54,7 @@ class MainLayout(
 
     init {
         initEnvironment()
-        addToNavbar(navigation())
+        addToNavbar(header())
         addToDrawer(drawer())
     }
 
@@ -70,10 +73,10 @@ class MainLayout(
         themeList[deselectedTheme] = false
     }
 
-    private fun navigation(): Component {
+    private fun header(): Component {
         val navigationLayout = HorizontalLayout(
             drawerToggle(),
-            tabs(),
+            if (isMobile()) appLabel() else navigation(),
             userMenu()
         )
         navigationLayout.setWidthFull()
@@ -94,27 +97,27 @@ class MainLayout(
         return toggle
     }
 
-    private fun tabs(): Component {
+    private fun navigation(): Component {
         val tabs = Tabs()
         tabs.addThemeVariants(TabsVariant.LUMO_MINIMAL)
         tabs.isAutoselect = false
         tabs.style["margin"] = "auto"
-        tabs.add(*navigationItems(tabs))
+        tabs.add(*navigationTabs(tabs).toTypedArray())
         return tabs
     }
 
-    private fun navigationItems(tabs: Tabs): Array<Tab> {
-        return arrayOf(
+    private fun navigationTabs(tabs: Tabs): List<Tab> {
+        if (isMobile()) {
+            return emptyList()
+        }
+        return listOf(
             navigationTab(tabs, View.Today),
             navigationTab(tabs, View.Registration)
         )
     }
 
     private fun navigationTab(tabs: Tabs, view: View): Tab {
-        val link = RouterLink(view.navigationTarget)
-        link.highlightCondition = HighlightConditions.sameLocation()
-        link.add(i18n(view.i18nKey))
-        link.tabIndex = -1
+        val link = routerLink(view)
         val tab = Tab(link)
         link.highlightAction =
             HighlightAction { _: RouterLink?, highlight: Boolean ->
@@ -123,6 +126,24 @@ class MainLayout(
                 }
             }
         return tab
+    }
+
+    private fun routerLink(view: View): RouterLink {
+        val link = RouterLink(view.navigationTarget)
+        link.highlightCondition = HighlightConditions.sameLocation()
+        link.add(i18n(view.i18nKey))
+        link.tabIndex = -1
+        return link
+    }
+
+    private fun appLabel(): Component {
+        val title = H1(i18n("app.name"))
+        title.setWidthFull()
+        title.style
+            .set("font-size", "var(--lumo-font-size-l)")
+            .set("text-align", "center")
+            .set("margin", "0")
+        return title
     }
 
     private fun userMenu(): Component {
@@ -142,25 +163,52 @@ class MainLayout(
         return menuBar
     }
 
-
-
     private fun drawer(): Component {
-        val layout = FlexLayout(
-            miniCalendar()
+        val layout = VerticalLayout(
+            *drawerItems().toTypedArray()
         )
         layout.style.set("margin-top", "10px")
         layout.setWidthFull()
+        layout.defaultHorizontalComponentAlignment = FlexComponent.Alignment.CENTER
         layout.justifyContentMode = FlexComponent.JustifyContentMode.CENTER
         return layout
+    }
+
+    private fun drawerItems(): List<Component> {
+        val items = mutableListOf(miniCalendar())
+        if (isMobile()) {
+            items.addAll(navigationLinks())
+        }
+        return items;
+    }
+
+    private fun navigationLinks(): List<Component> {
+        return listOf(
+            navigationLink(View.Today)
+        )
+    }
+
+    private fun navigationLink(view: View): Component {
+        val routerLink = routerLink(view)
+        routerLink.highlightAction = HighlightAction { _: RouterLink?, highlight: Boolean ->
+            if (highlight) {
+                // TODO highlight current route
+            }
+        }
+        return routerLink
     }
 
     private fun miniCalendar(): Component {
         val miniCalendar = MiniCalendar()
         miniCalendar.value = LocalDate.now()
         miniCalendar.addValueChangeListener { event ->
-            ComponentUtil.fireEvent(
-                UI.getCurrent(),
+            publishEvent(
                 DateSelectedEvent(event.value)
+            )
+        }
+        miniCalendar.addYearMonthChangeListener { event ->
+            publishEvent(
+                YearMonthSelectedEvent(event.value)
             )
         }
         return miniCalendar

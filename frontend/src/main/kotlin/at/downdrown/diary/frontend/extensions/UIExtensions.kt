@@ -4,7 +4,7 @@ import at.downdrown.diary.frontend.view.View
 import com.vaadin.flow.component.UI
 import com.vaadin.flow.server.VaadinSession
 
-fun UI.isMobile(): Boolean {
+fun isMobile(): Boolean {
     val webBrowser = VaadinSession.getCurrent().browser
     return webBrowser.isAndroid || webBrowser.isIPhone || webBrowser.isWindowsPhone
 }

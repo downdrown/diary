@@ -35,7 +35,7 @@ class Validators(
     companion object {
         fun dateTimeInPast(maxDate: LocalDateTime) : Validator<LocalDateTime> {
             return DateTimeRangeValidator(
-                i18n("validator.datetime.past"),
+                "validator.datetime.past".i18n(),
                 LocalDateTime.MIN,
                 maxDate)
         }
@@ -45,7 +45,7 @@ class Validators(
         return Validator { givenUsername, context ->
 
             if (givenUsername == null || givenUsername.isBlank()) {
-                ValidationResult.error(i18n("validator.username.empty", givenUsername))
+                ValidationResult.error("validator.username.empty".i18n(givenUsername))
             }
 
             val field = context.component.get() as TextField
@@ -55,10 +55,10 @@ class Validators(
 
             if (usernameAlreadyTaken && !isOwnUsername) {
                 field.colorTextRed()
-                ValidationResult.error(i18n("validator.username.alreadyexists", givenUsername))
+                ValidationResult.error("validator.username.alreadyexists".i18n(givenUsername))
             } else if (givenUsername.contains(" ")) {
                 field.colorTextRed()
-                ValidationResult.error(i18n("validator.username.illegalformat", givenUsername))
+                ValidationResult.error("validator.username.illegalformat".i18n(givenUsername))
             } else {
                 field.colorTextGreen()
                 ValidationResult.ok()
@@ -74,7 +74,7 @@ class Validators(
             ) {
                 ValidationResult.ok()
             } else {
-                ValidationResult.error(i18n("validator.password.nomatch"))
+                ValidationResult.error("validator.password.nomatch".i18n())
             }
         }
     }
@@ -93,7 +93,7 @@ class Validators(
                     )
                     ValidationResult.ok()
                 } catch (badCredentials: BadCredentialsException) {
-                    ValidationResult.error(i18n("validator.password.doesnotmatchcurrent"))
+                    ValidationResult.error("validator.password.doesnotmatchcurrent".i18n())
                 }
             }
         }
@@ -111,7 +111,7 @@ class Validators(
                             value
                         )
                     )
-                    ValidationResult.error(i18n("validator.password.matchescurrent"))
+                    ValidationResult.error("validator.password.matchescurrent".i18n())
                 } catch (badCredentials: BadCredentialsException) {
                     ValidationResult.ok()
                 }
@@ -143,21 +143,21 @@ class Validators(
 
             when (passwordStrengthValidator.validatePassword(event.value)) {
                 PasswordStrength.Strong -> {
-                    helperText.text = i18n("helpercomponent.password.strength.strong")
+                    helperText.text = "helpercomponent.password.strength.strong".i18n()
                     helperText.colorTextGreen()
                     helperComponent.value = 1.0
                     helperComponent.addThemeVariants(ProgressBarVariant.LUMO_SUCCESS)
                 }
 
                 PasswordStrength.Medium -> {
-                    helperText.text = i18n("helpercomponent.password.strength.medium")
+                    helperText.text = "helpercomponent.password.strength.medium".i18n()
                     helperText.colorTextYellow()
                     helperComponent.value = .66
                     helperComponent.addClassName("warning")
                 }
 
                 PasswordStrength.Weak -> {
-                    helperText.text = i18n("helpercomponent.password.strength.weak")
+                    helperText.text = "helpercomponent.password.strength.weak".i18n()
                     helperText.colorTextRed()
                     helperComponent.value = .33
                     helperComponent.addThemeVariants(ProgressBarVariant.LUMO_ERROR)
@@ -169,13 +169,13 @@ class Validators(
     fun birthdateValidator(): Validator<LocalDate> {
         val today = LocalDate.now()
         return DateRangeValidator(
-            i18n("validator.birthdate.invalid"),
+            "validator.birthdate.invalid".i18n(),
             today.minusYears(100),
             today.minusYears(13)
         )
     }
 
     fun emailValidator(): Validator<String> {
-        return EmailValidator(i18n("validator.email.invalid"))
+        return EmailValidator("validator.email.invalid".i18n())
     }
 }

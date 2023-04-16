@@ -16,22 +16,22 @@ import java.time.format.FormatStyle
 class Notifications {
     companion object {
         fun showSaveSuccess() {
-            successNotification(i18n("notification.save.success")).open()
+            successNotification("notification.save.success".i18n()).open()
         }
 
         fun showRegistrationSuccess(registeredUsername: String) {
-            successNotification(i18n("notification.registration.success", registeredUsername)).open()
+            successNotification("notification.registration.success".i18n(registeredUsername)).open()
         }
 
         fun showChangePasswordSuccess() {
-            successNotification(i18n("notification.changepassword.success")).open()
+            successNotification("notification.changepassword.success".i18n()).open()
         }
 
         fun showDateSelectionSuccess(selectedDate: LocalDate) {
             val currentLocale = UI.getCurrent().locale
             val localizedFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM).withLocale(currentLocale)
             successNotification(
-                i18n("notification.dateselection.success", selectedDate.format(localizedFormatter))
+                "notification.dateselection.success".i18n(selectedDate.format(localizedFormatter))
             ).open()
         }
 
@@ -43,7 +43,7 @@ class Notifications {
 
             val notificationLabel = Label(notification)
 
-            val dismissButton = Button(i18n("notification.button.dismiss", params)) { notificationComponent.close() }
+            val dismissButton = Button("notification.button.dismiss".i18n(params)) { notificationComponent.close() }
             dismissButton.addThemeVariants(ButtonVariant.LUMO_SMALL)
             dismissButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY)
 

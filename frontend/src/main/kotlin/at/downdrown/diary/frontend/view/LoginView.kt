@@ -49,19 +49,19 @@ class LoginView : VerticalLayout(), HasDynamicTitle, BeforeEnterObserver {
     private fun setupLoginI18n(): LoginI18n {
 
         val loginI18nHeader = LoginI18n.Header()
-        loginI18nHeader.title = i18n("login.header.title")
-        loginI18nHeader.description = i18n("login.header.description")
+        loginI18nHeader.title = "login.header.title".i18n()
+        loginI18nHeader.description = "login.header.description".i18n()
 
         val loginI18nForm = LoginI18n.Form()
-        loginI18nForm.title = i18n("login.form.title")
-        loginI18nForm.username = i18n("login.form.username")
-        loginI18nForm.password = i18n("login.form.password")
-        loginI18nForm.submit = i18n("login.form.submit")
-        loginI18nForm.forgotPassword = i18n("login.form.forgotPassword")
+        loginI18nForm.title = "login.form.title".i18n()
+        loginI18nForm.username = "login.form.username".i18n()
+        loginI18nForm.password = "login.form.password".i18n()
+        loginI18nForm.submit = "login.form.submit".i18n()
+        loginI18nForm.forgotPassword = "login.form.forgotPassword".i18n()
 
         val loginI18nErrorMessage = LoginI18n.ErrorMessage()
-        loginI18nErrorMessage.title = i18n("login.error.title")
-        loginI18nErrorMessage.message = i18n("login.error.message")
+        loginI18nErrorMessage.title = "login.error.title".i18n()
+        loginI18nErrorMessage.message = "login.error.message".i18n()
 
         val loginI18n = LoginI18n()
         loginI18n.header = loginI18nHeader
@@ -86,6 +86,6 @@ class LoginView : VerticalLayout(), HasDynamicTitle, BeforeEnterObserver {
     }
 
     override fun getPageTitle(): String {
-        return i18n("login.pagetitle")
+        return "login.pagetitle".i18n()
     }
 }

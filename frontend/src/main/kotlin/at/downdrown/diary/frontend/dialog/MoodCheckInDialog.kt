@@ -43,7 +43,7 @@ class MoodCheckInDialog(
 
     init {
 
-        headerTitle = i18n("moodcheckin.headertitle")
+        headerTitle = "moodcheckin.headertitle".i18n()
         isCloseOnEsc = false
         isCloseOnOutsideClick = false
 
@@ -53,12 +53,12 @@ class MoodCheckInDialog(
 
         add(form())
 
-        val saveButton = Button(i18n("moodcheckin.submit")) { handleSave() }
+        val saveButton = Button("moodcheckin.submit".i18n()) { handleSave() }
         saveButton.addThemeVariants(ButtonVariant.LUMO_SMALL)
         saveButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY)
         saveButton.hide()
 
-        val closeButton = Button(i18n("moodcheckin.cancel")) { handleClose() }
+        val closeButton = Button("moodcheckin.cancel".i18n()) { handleClose() }
         closeButton.addThemeVariants(ButtonVariant.LUMO_SMALL)
 
         footer.add(closeButton, saveButton)
@@ -96,12 +96,12 @@ class MoodCheckInDialog(
         })
 
 
-        val checkInPoint = DateTimePicker(i18n("moodcheckin.form.checkinpoint"))
+        val checkInPoint = DateTimePicker("moodcheckin.form.checkinpoint".i18n())
         checkInPoint.isVisible = allowCheckInPointSelection
 
         val comment = TextArea()
         comment.hide()
-        comment.placeholder = i18n("moodcheckin.form.comment.placeholder")
+        comment.placeholder = "moodcheckin.form.comment.placeholder".i18n()
         comment.maxLength = 5000
         comment.valueChangeTimeout = 200
         comment.valueChangeMode = ValueChangeMode.LAZY
@@ -116,7 +116,7 @@ class MoodCheckInDialog(
         comment.helperComponent = characterCountLabel
         comment.addValueChangeListener { characterCountLabel.text = "${comment.value.length} / ${comment.maxLength}" }
 
-        val addCommentButton = Button(i18n("moodcheckin.form.addcomment")) { e -> comment.show(); e.source.hide() }
+        val addCommentButton = Button("moodcheckin.form.addcomment".i18n()) { e -> comment.show(); e.source.hide() }
         addCommentButton.addThemeVariants(ButtonVariant.LUMO_SMALL)
         addCommentButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY)
 
@@ -158,13 +158,13 @@ class MoodCheckInDialog(
 
             val confirmDialog = ConfirmDialog()
             confirmDialog.isCloseOnEsc = false
-            confirmDialog.setHeader(i18n("moodcheckin.cancel.unsaved.header"))
-            confirmDialog.setText(i18n("moodcheckin.cancel.unsaved.text"))
-            confirmDialog.setConfirmText(i18n("moodcheckin.submit"))
+            confirmDialog.setHeader("moodcheckin.cancel.unsaved.header".i18n())
+            confirmDialog.setText("moodcheckin.cancel.unsaved.text".i18n())
+            confirmDialog.setConfirmText("moodcheckin.submit".i18n())
             confirmDialog.setCancelable(true)
-            confirmDialog.setCancelText(i18n("moodcheckin.cancel"))
+            confirmDialog.setCancelText("moodcheckin.cancel".i18n())
             confirmDialog.setRejectable(true)
-            confirmDialog.setRejectText(i18n("moodcheckin.cancel.unsaved.discard"))
+            confirmDialog.setRejectText("moodcheckin.cancel.unsaved.discard".i18n())
             confirmDialog.addCancelListener { confirmDialog.close() }
             confirmDialog.addRejectListener { confirmDialog.close(); close() }
             confirmDialog.addConfirmListener { handleSave() }

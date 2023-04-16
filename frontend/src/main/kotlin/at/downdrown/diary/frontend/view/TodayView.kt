@@ -31,7 +31,7 @@ class TodayView(
 
     init {
 
-        val title = H1(i18n("app.name"))
+        val title = H1("app.name".i18n())
         title.style
             .set("font-size", "var(--lumo-font-size-l)")
             .set("left", "var(--lumo-space-l)")
@@ -56,7 +56,7 @@ class TodayView(
     }
 
     override fun getPageTitle(): String {
-        return i18n("main.pagetitle")
+        return "main.pagetitle".i18n()
     }
 
     override fun beforeEnter(event: BeforeEnterEvent?) {

@@ -52,31 +52,31 @@ class RegistrationView(
         tabSheet.setWidth(if (isMobile()) 100f else 50f, Unit.PERCENTAGE)
         tabSheet.setMaxWidth(700f, Unit.PIXELS)
         tabSheet.addThemeVariants(TabSheetVariant.LUMO_BORDERED)
-        tabSheet.add(Tab(i18n("registration.tab.register")), registerSubView())
-        tabSheet.add(Tab(i18n("registration.tab.reset")), VerticalLayout()).isEnabled = false
+        tabSheet.add(Tab("registration.tab.register".i18n()), registerSubView())
+        tabSheet.add(Tab("registration.tab.reset".i18n()), VerticalLayout()).isEnabled = false
 
         add(tabSheet)
     }
 
     private fun registerSubView(): Component {
 
-        val username = TextField(i18n("registration.form.username"))
+        val username = TextField("registration.form.username".i18n())
         username.prefixComponent = VaadinIcon.AT.create()
-        username.helperText = i18n("registration.form.username.helpertext")
-        username.placeholder = i18n("registration.form.username.placeholder")
+        username.helperText = "registration.form.username.helpertext".i18n()
+        username.placeholder = "registration.form.username.placeholder".i18n()
 
-        val firstname = TextField(i18n("registration.form.firstname"))
+        val firstname = TextField("registration.form.firstname".i18n())
         firstname.autocapitalize = Autocapitalize.WORDS
 
-        val lastname = TextField(i18n("registration.form.lastname"))
+        val lastname = TextField("registration.form.lastname".i18n())
         lastname.autocapitalize = Autocapitalize.WORDS
 
-        val birthdate = DatePicker(i18n("registration.form.birthdate"))
-        val email = EmailField(i18n("registration.form.email"))
-        val password = PasswordField(i18n("registration.form.password"))
+        val birthdate = DatePicker("registration.form.birthdate".i18n())
+        val email = EmailField("registration.form.email".i18n())
+        val password = PasswordField("registration.form.password".i18n())
         validators.addDefaultHelperComponentFor(password)
 
-        val confirmPassword = PasswordField(i18n("registration.form.confirmPassword"))
+        val confirmPassword = PasswordField("registration.form.confirmPassword".i18n())
 
         val formLayout = FormLayout(
             username,
@@ -132,7 +132,7 @@ class RegistrationView(
 
         binder.bean = UserRegistrationFormModel()
 
-        val submitButton = Button(i18n("registration.form.submit")) { event ->
+        val submitButton = Button("registration.form.submit".i18n()) { event ->
             try {
                 val userRegistrationFormModel = binder.bean
                 userService.register(userRegistrationFormModel.toUser(), userRegistrationFormModel.password)
@@ -153,7 +153,7 @@ class RegistrationView(
             submitButton.isEnabled = binder.isValid
         }
 
-        val backToLoginButton = Button(i18n("registration.action.login")) { navigate(View.Login) }
+        val backToLoginButton = Button("registration.action.login".i18n()) { navigate(View.Login) }
         backToLoginButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY)
         backToLoginButton.addThemeVariants(ButtonVariant.LUMO_SMALL)
 
@@ -162,15 +162,15 @@ class RegistrationView(
         actionsLayout.isSpacing = true
 
         return VerticalLayout(
-            H3(i18n("registration.header.title")),
-            Text(i18n("registration.header.description")),
+            H3("registration.header.title".i18n()),
+            Text("registration.header.description".i18n()),
             formLayout,
             actionsLayout
         )
     }
 
     override fun getPageTitle(): String {
-        return i18n("registration.pagetitle")
+        return "registration.pagetitle".i18n()
     }
 
     override fun beforeEnter(event: BeforeEnterEvent) {

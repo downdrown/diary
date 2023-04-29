@@ -1,7 +1,7 @@
-extra["vaadinVersion"] = "24.0.3"
+extra["vaadinVersion"] = "24.0.5"
 
 plugins {
-    id("com.vaadin") version "24.0.3"
+    id("com.vaadin") version "24.0.5"
 }
 
 repositories {

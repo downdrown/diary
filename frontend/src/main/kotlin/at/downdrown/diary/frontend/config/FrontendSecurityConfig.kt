@@ -43,9 +43,9 @@ class FrontendSecurityConfig(
         .and()
             .authenticationManager(authenticationManager())
 
-        setLoginView(http, LoginView::class.java)
-
         super.configure(http)
+
+        setLoginView(http, LoginView::class.java)
     }
     // @formatter:on
 

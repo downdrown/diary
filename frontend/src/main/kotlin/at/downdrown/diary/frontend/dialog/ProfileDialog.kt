@@ -35,9 +35,15 @@ class ProfileDialog(
         isCloseOnEsc = false
         isCloseOnOutsideClick = false
 
-        setMinWidth(500f, Unit.PIXELS)
-        setMaxWidth(700f, Unit.PIXELS)
-        setMaxHeight(80f, Unit.PERCENTAGE)
+        if (isDesktop()) {
+            setMinWidth(500f, Unit.PIXELS)
+            setMaxWidth(700f, Unit.PIXELS)
+            setMaxHeight(80f, Unit.PERCENTAGE)
+        }
+
+        if (isMobile()) {
+            setWidthFull()
+        }
 
         val avatar = Avatar(userPrincipal.fullname)
         avatar.addThemeVariants(AvatarVariant.LUMO_XLARGE)

@@ -10,9 +10,10 @@ import at.downdrown.diary.frontend.event.YearMonthSelectedEvent
 import at.downdrown.diary.frontend.event.onEvent
 import at.downdrown.diary.frontend.extensions.i18n
 import at.downdrown.diary.frontend.extensions.isDesktop
+import at.downdrown.diary.frontend.layout.GridLayout
 import at.downdrown.diary.frontend.layout.MainLayout
+import com.vaadin.flow.component.Component
 import com.vaadin.flow.component.dependency.CssImport
-import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.router.*
 import jakarta.annotation.security.PermitAll
 import mu.KotlinLogging
@@ -27,14 +28,15 @@ private val log = KotlinLogging.logger {}
 @CssImport("./styles.css")
 class TodayView(
     private val moodCheckInService: MoodCheckInService
-) : VerticalLayout(), HasDynamicTitle, BeforeEnterObserver {
+) : GridLayout(), HasDynamicTitle, BeforeEnterObserver {
 
     init {
 
         onEvent(DateSelectedEvent::class.java) { event -> handleDateSelection(event.value) }
         onEvent(YearMonthSelectedEvent::class.java) { event -> handleYearMonthSelection(event.value) }
 
-        addGreeting()
+        addExpanded(greeting())
+
     }
 
     override fun getPageTitle(): String {
@@ -52,12 +54,10 @@ class TodayView(
         }
     }
 
-    private fun addGreeting() {
-        add(
-            Banner(
-                "today.greeting.heading".i18n(userPrincipal().fullname),
-                "today.greeting.content".i18n()
-            )
+    private fun greeting(): Component {
+        return Banner(
+            "today.greeting.heading".i18n(userPrincipal().fullname),
+            "today.greeting.content".i18n()
         )
     }
 

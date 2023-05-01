@@ -13,8 +13,15 @@ import at.downdrown.diary.frontend.extensions.isDesktop
 import at.downdrown.diary.frontend.layout.GridLayout
 import at.downdrown.diary.frontend.layout.MainLayout
 import com.vaadin.flow.component.Component
+import com.vaadin.flow.component.Unit
+import com.vaadin.flow.component.button.Button
+import com.vaadin.flow.component.button.ButtonVariant
 import com.vaadin.flow.component.dependency.CssImport
-import com.vaadin.flow.router.*
+import com.vaadin.flow.component.icon.VaadinIcon
+import com.vaadin.flow.router.BeforeEnterEvent
+import com.vaadin.flow.router.BeforeEnterObserver
+import com.vaadin.flow.router.HasDynamicTitle
+import com.vaadin.flow.router.Route
 import jakarta.annotation.security.PermitAll
 import mu.KotlinLogging
 import java.time.LocalDate
@@ -36,7 +43,7 @@ class TodayView(
         onEvent(YearMonthSelectedEvent::class.java) { event -> handleYearMonthSelection(event.value) }
 
         addExpanded(greeting())
-
+        add(checkInAction())
     }
 
     override fun getPageTitle(): String {
@@ -49,8 +56,9 @@ class TodayView(
     }
 
     private fun handleYearMonthSelection(selectedYearMonth: YearMonth) {
-        log.trace { "The user selected a new year-month combination: " +
-                selectedYearMonth.format(DateTimeFormatter.ofPattern("MMM yyyy"))
+        log.trace {
+            "The user selected a new year-month combination: " +
+                    selectedYearMonth.format(DateTimeFormatter.ofPattern("MMM yyyy"))
         }
     }
 
@@ -59,6 +67,17 @@ class TodayView(
             "today.greeting.heading".i18n(userPrincipal().fullname),
             "today.greeting.content".i18n()
         )
+    }
+
+    private fun checkInAction(): Component {
+        val button = Button("today.action.addmoodcheckin".i18n()) {
+            MoodCheckInDialog(true, moodCheckInService).open()
+        }
+        button.icon = VaadinIcon.USER_HEART.create()
+        button.addThemeVariants(ButtonVariant.LUMO_LARGE)
+        button.setWidthFull()
+        button.setHeight(80f, Unit.PIXELS)
+        return button
     }
 
     override fun beforeEnter(event: BeforeEnterEvent?) {

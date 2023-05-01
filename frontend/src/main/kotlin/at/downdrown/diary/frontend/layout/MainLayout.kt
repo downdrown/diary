@@ -6,6 +6,7 @@ import at.downdrown.diary.frontend.dialog.ChangePasswordDialog
 import at.downdrown.diary.frontend.dialog.ProfileDialog
 import at.downdrown.diary.frontend.event.DateSelectedEvent
 import at.downdrown.diary.frontend.event.YearMonthSelectedEvent
+import at.downdrown.diary.frontend.event.onEvent
 import at.downdrown.diary.frontend.event.publishEvent
 import at.downdrown.diary.frontend.extensions.i18n
 import at.downdrown.diary.frontend.extensions.isMobile
@@ -65,6 +66,8 @@ class MainLayout(
             .then(JreJsonString::class.java) { userPreferredTheme: JreJsonString ->
                 toggleThemeTo(userPreferredTheme.asString())
             }
+
+        onEvent(DateSelectedEvent::class.java) { isDrawerOpened = false }
     }
 
     private fun toggleThemeTo(selectedTheme: String) {

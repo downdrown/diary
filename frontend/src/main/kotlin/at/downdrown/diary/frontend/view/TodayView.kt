@@ -3,6 +3,7 @@ package at.downdrown.diary.frontend.view
 import at.downdrown.diary.api.mood.MoodCheckInService
 import at.downdrown.diary.api.security.userPrincipal
 import at.downdrown.diary.frontend.Notifications
+import at.downdrown.diary.frontend.component.Banner
 import at.downdrown.diary.frontend.dialog.MoodCheckInDialog
 import at.downdrown.diary.frontend.event.DateSelectedEvent
 import at.downdrown.diary.frontend.event.YearMonthSelectedEvent
@@ -11,7 +12,6 @@ import at.downdrown.diary.frontend.extensions.i18n
 import at.downdrown.diary.frontend.extensions.isDesktop
 import at.downdrown.diary.frontend.layout.MainLayout
 import com.vaadin.flow.component.dependency.CssImport
-import com.vaadin.flow.component.html.H1
 import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.router.*
 import jakarta.annotation.security.PermitAll
@@ -31,17 +31,14 @@ class TodayView(
 
     init {
 
-        val title = H1("app.name".i18n())
-        title.style
-            .set("font-size", "var(--lumo-font-size-l)")
-            .set("left", "var(--lumo-space-l)")
-            .set("margin", "0")
-            .set("position", "absolute")
-
-        add(title)
-
         onEvent(DateSelectedEvent::class.java) { event -> handleDateSelection(event.value) }
         onEvent(YearMonthSelectedEvent::class.java) { event -> handleYearMonthSelection(event.value) }
+
+        addGreeting()
+    }
+
+    override fun getPageTitle(): String {
+        return "main.pagetitle".i18n()
     }
 
     private fun handleDateSelection(selectedDate: LocalDate) {
@@ -55,8 +52,13 @@ class TodayView(
         }
     }
 
-    override fun getPageTitle(): String {
-        return "main.pagetitle".i18n()
+    private fun addGreeting() {
+        add(
+            Banner(
+                "today.greeting.heading".i18n(userPrincipal().fullname),
+                "today.greeting.content".i18n()
+            )
+        )
     }
 
     override fun beforeEnter(event: BeforeEnterEvent?) {
